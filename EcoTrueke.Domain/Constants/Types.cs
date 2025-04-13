@@ -4,9 +4,12 @@
     {
         public static class User
         {
-            public const string Active = "active";
-            public const string Suspended = "suspended";
-            public const string Pending = "pending";
+            public static class Subscription
+            {
+                public const string Active = "active";
+                public const string Suspended = "suspended";
+                public const string Pending = "pending";
+            }
         }
     }
 }
