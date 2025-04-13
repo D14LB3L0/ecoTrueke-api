@@ -30,7 +30,7 @@ namespace EcoTrueke.Domain.Entities
                 PersonId = personId,
                 Email = email,
                 Password = Encryptor.SHA256Hash(password),
-                AccountStatus = Types.User.Pending,
+                AccountStatus = Types.Subscription.Pending,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false
