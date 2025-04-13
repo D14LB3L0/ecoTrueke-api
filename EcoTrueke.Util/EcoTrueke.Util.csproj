@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\EcoTrueke.Services\EcoTrueke.Services.csproj" />
-    <ProjectReference Include="..\EcoTrueke.Util\EcoTrueke.Util.csproj" />
-  </ItemGroup>
-
 </Project>

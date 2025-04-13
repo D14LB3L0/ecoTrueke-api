@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Wayni.Services.API
+namespace EcoTrueke.Services.API
 {
     public class APIResponse
     {

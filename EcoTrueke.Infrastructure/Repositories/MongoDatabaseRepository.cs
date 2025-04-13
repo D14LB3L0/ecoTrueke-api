@@ -4,11 +4,11 @@ using System.Linq.Expressions;
 
 namespace EcoTrueke.Infrastructure.Repositories
 {
-    public class MongoDbRepository : IDatabaseRepository
+    public class MongoDatabaseRepository : IDatabaseRepository
     {
         private readonly IMongoDatabase _database;
 
-        public MongoDbRepository(IMongoDatabase database)
+        public MongoDatabaseRepository(IMongoDatabase database)
         {
             _database = database;
         }
@@ -35,11 +35,11 @@ namespace EcoTrueke.Infrastructure.Repositories
             var collection = GetCollection<T>();
             return collection.Find(filter).FirstOrDefaultAsync();
         }
-
-        public Task InsertOneAsync<T>(T document)
+        public async Task<T> InsertOneAsync<T>(T document)
         {
             var collection = GetCollection<T>();
-            return collection.InsertOneAsync(document);
+            await collection.InsertOneAsync(document); 
+            return document; 
         }
 
         public async Task ReplaceOneAsync<T>(Expression<Func<T, bool>> filter, T document)

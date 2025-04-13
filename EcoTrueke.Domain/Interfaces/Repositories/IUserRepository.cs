@@ -1,0 +1,12 @@
+﻿
+using EcoTrueke.Domain.Entities;
+
+namespace EcoTrueke.Domain.Interfaces.Repositories
+{
+    public interface IUserRepository
+    {
+        Task<User> CreateUser(User user);
+        Task<User?> GetUserByEmail(string email);
+        Task DeleteUser(string userId);
+    }
+}

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
-namespace Wayni.Services.API
+namespace EcoTrueke.Services.API
 {
     public class AuthorizationHeader
     {

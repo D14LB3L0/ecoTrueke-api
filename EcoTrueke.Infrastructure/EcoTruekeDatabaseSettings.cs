@@ -1,6 +1,6 @@
 ﻿namespace EcoTrueke.Infrastructure
 {
-    public class EcoTruekeDbSettings
+    public class EcoTruekeDatabaseSettings
     {
         public string ConnectionString { get; set; }
         public string Database { get; set; }

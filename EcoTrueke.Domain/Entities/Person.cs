@@ -1,4 +1,4 @@
-﻿namespace EcoTrueke.Domain.Entities
+﻿    namespace EcoTrueke.Domain.Entities
 {
     public class Person
     {
@@ -12,8 +12,6 @@
 
         public string Address { get; set; }
 
-        public DateOnly BirthDate { get; set; }
-
         public string DocumentNumber { get; set; }
 
         public string DocumentType { get; set; }    // "dni"
@@ -22,8 +20,19 @@
 
         public string ProfilePictureUrl { get; set; }
 
-        public DateOnly UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
-        public DateOnly CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+    
+        public static Person Create (string firstName, string lastName)
+        {
+            return new()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
+        }
     }
 }

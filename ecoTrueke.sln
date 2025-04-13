@@ -5,17 +5,19 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5E3A5EAB-1A84-4932-9347-939B705E0AD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoTrueke.Domain", "EcoTrueke.Domain\EcoTrueke.Domain.csproj", "{ED4A1404-0928-43E0-9B6F-2D73507C5784}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoTrueke.Domain", "EcoTrueke.Domain\EcoTrueke.Domain.csproj", "{ED4A1404-0928-43E0-9B6F-2D73507C5784}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoTrueke.Application", "EcoTrueke.Application\EcoTrueke.Application.csproj", "{8185C4FA-6B60-4308-AAC4-D6A8ED38E3CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoTrueke.Application", "EcoTrueke.Application\EcoTrueke.Application.csproj", "{8185C4FA-6B60-4308-AAC4-D6A8ED38E3CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoTrueke.Infrastructure", "EcoTrueke.Infrastructure\EcoTrueke.Infrastructure.csproj", "{45FA94FE-8AFB-49F9-9DFD-41FD554EA014}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoTrueke.Infrastructure", "EcoTrueke.Infrastructure\EcoTrueke.Infrastructure.csproj", "{45FA94FE-8AFB-49F9-9DFD-41FD554EA014}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoTrueke.API", "EcoTrueke.API\EcoTrueke.API.csproj", "{F2E63E82-0E76-4D4E-BFA7-FF7AB9AA0E6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoTrueke.API", "EcoTrueke.API\EcoTrueke.API.csproj", "{F2E63E82-0E76-4D4E-BFA7-FF7AB9AA0E6F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{E0D4AEA8-D194-43E1-9B4A-2DEE63FA75A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoTrueke.Services", "EcoTrueke.Services\EcoTrueke.Services.csproj", "{3CC01AED-1EDC-46D8-9A46-040914A3103A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoTrueke.Services", "EcoTrueke.Services\EcoTrueke.Services.csproj", "{3CC01AED-1EDC-46D8-9A46-040914A3103A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoTrueke.Util", "EcoTrueke.Util\EcoTrueke.Util.csproj", "{E871A2CC-1EEC-46CC-8BF3-A88EAFA6176C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{3CC01AED-1EDC-46D8-9A46-040914A3103A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CC01AED-1EDC-46D8-9A46-040914A3103A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CC01AED-1EDC-46D8-9A46-040914A3103A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E871A2CC-1EEC-46CC-8BF3-A88EAFA6176C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E871A2CC-1EEC-46CC-8BF3-A88EAFA6176C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E871A2CC-1EEC-46CC-8BF3-A88EAFA6176C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E871A2CC-1EEC-46CC-8BF3-A88EAFA6176C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{45FA94FE-8AFB-49F9-9DFD-41FD554EA014} = {5E3A5EAB-1A84-4932-9347-939B705E0AD6}
 		{F2E63E82-0E76-4D4E-BFA7-FF7AB9AA0E6F} = {5E3A5EAB-1A84-4932-9347-939B705E0AD6}
 		{3CC01AED-1EDC-46D8-9A46-040914A3103A} = {E0D4AEA8-D194-43E1-9B4A-2DEE63FA75A2}
+		{E871A2CC-1EEC-46CC-8BF3-A88EAFA6176C} = {E0D4AEA8-D194-43E1-9B4A-2DEE63FA75A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCD0D7DC-6D37-43BF-85BA-46E8A158D2F3}

@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Wayni.Services.API
+namespace EcoTrueke.Services.API
 {
     public class APIClient
     {

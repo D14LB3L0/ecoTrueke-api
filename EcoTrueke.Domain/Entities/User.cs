@@ -1,4 +1,7 @@
-﻿namespace EcoTrueke.Domain.Entities
+﻿using EcoTrueke.Domain.Constants;
+using EcoTrueke.Util.Security;
+
+namespace EcoTrueke.Domain.Entities
 {
     public class User
     {
@@ -12,12 +15,26 @@
 
         public string AccountStatus { get; set; }  // "active", "suspended", "pending"
 
-        public string Plan { get; set; } // "standard", "premium"
+        public string Subscription { get; set; } // "standard", "premium"
 
-        public DateOnly UpdatedAt { get; set; }
-        
-        public DateOnly CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+
+        public DateTime CreatedAt { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public static User Create(string personId, string email, string password)
+        {
+            return new()
+            {
+                PersonId = personId,
+                Email = email,
+                Password = Encryptor.SHA256Hash(password),
+                AccountStatus = Types.User.Pending,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                IsDeleted = false
+            };
+        }
     }
 }

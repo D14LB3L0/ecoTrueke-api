@@ -1,0 +1,16 @@
+﻿using EcoTrueke.Application.UseCaseRegistration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace EcoTrueke.Application
+{
+    public static class DependencyInjection
+    {
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            services
+                .AddUserUseCases();
+
+            return services;
+        }
+    }
+}
