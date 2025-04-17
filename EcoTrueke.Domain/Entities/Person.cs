@@ -23,7 +23,9 @@
         public DateTime UpdatedAt { get; set; }
 
         public DateTime CreatedAt { get; set; }
-    
+
+        public bool IsDeleted { get; set; }
+
         public static Person Create (string firstName, string lastName)
         {
             return new()
@@ -31,7 +33,8 @@
                 FirstName = firstName,
                 LastName = lastName,
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow,
+                IsDeleted = false
             };
         }
     }

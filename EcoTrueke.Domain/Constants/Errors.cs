@@ -17,12 +17,24 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "passwords_do_not_match",
                 Message = "Las contraseñas no coinciden."
+            };      
+            public static Result IncorrectPassword => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "incorrect_password",
+                Message = "La contraseña es incorrecta."
             };
             public static Result AlreadyExists => new()
             {
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "user_already_exists",
                 Message = "El usuario ya existe."
+            };   
+            public static Result AccountStatutsSuspended => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "account_status_suspended",
+                Message = "La cuenta está suspendida."
             };
         }
     }

@@ -17,6 +17,7 @@
                 ProfilePictureUrl = person.ProfilePictureUrl,
                 CreatedAt = person.CreatedAt,
                 UpdatedAt = person.UpdatedAt,
+                IsDeleted = person.IsDeleted
             };
         }
 
@@ -35,6 +36,7 @@
                 ProfilePictureUrl = mongoPerson.ProfilePictureUrl,
                 CreatedAt = mongoPerson.CreatedAt,
                 UpdatedAt = mongoPerson.UpdatedAt,
+                IsDeleted = mongoPerson.IsDeleted
             };
         }
     }

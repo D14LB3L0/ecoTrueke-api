@@ -1,5 +1,7 @@
 ﻿using EcoTrueke.Domain.Interfaces.Repositories;
+using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Infrastructure.Repositories;
+using EcoTrueke.Infrastructure.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
@@ -12,7 +14,8 @@ namespace EcoTrueke.Infrastructure
         {
             services
                 .AddMongoDB(configuration)
-                .AddRepositories();
+                .AddRepositories()
+                .AddExternalServices();
 
             return services;
         }
@@ -40,6 +43,13 @@ namespace EcoTrueke.Infrastructure
             services.AddScoped<IDatabaseRepository, MongoDatabaseRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddExternalServices(this IServiceCollection services)
+        {
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }

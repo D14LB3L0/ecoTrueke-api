@@ -1,7 +1,4 @@
-﻿using EcoTrueke.Domain.Entities;
-using EcoTrueke.Infrastructure.MongoModels;
-
-namespace EcoTrueke.Infrastructure.Mappers
+﻿namespace EcoTrueke.Infrastructure.Mappers
 {
     public static class UserMapper
     {

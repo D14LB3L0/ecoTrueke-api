@@ -8,7 +8,7 @@ namespace EcoTrueke.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services
-                .AddUserUseCases();
+                .AddAuthUseCases();
 
             return services;
         }

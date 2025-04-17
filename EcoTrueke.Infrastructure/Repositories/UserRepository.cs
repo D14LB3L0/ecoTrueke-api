@@ -37,7 +37,9 @@ namespace EcoTrueke.Infrastructure.Repositories
         public async Task<Domain.Entities.User?> GetUserByEmail(string email)
         {
             // get mongo user
-            var mongoUser = await _databaseRepository.FindOneAsync<MongoModels.User>(u => u.Email == email);
+            var mongoUser = await _databaseRepository.FindOneAsync<MongoModels.User>(
+                u => u.Email == email && u.IsDeleted != true
+                );
 
             // if the user doesn't exists
             if (mongoUser == null)

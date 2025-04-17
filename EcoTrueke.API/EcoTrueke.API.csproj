@@ -19,8 +19,4 @@
     <ProjectReference Include="..\EcoTrueke.Infrastructure\EcoTrueke.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Responses\" />
-  </ItemGroup>
-
 </Project>
