@@ -22,17 +22,10 @@ namespace EcoTrueke.Application.UseCases.Users
             if (password != confirmPassword)
                 return Errors.User.PasswordsDoNotMatch;
 
-            // verify if user exixsts with a subscription
+            // verify if user exixsts
             var existsUser = await _userRepository.GetUserByEmail(email);
-            if (existsUser != null && existsUser.Subscription != null)
-                return Errors.User.AlreadyExists;
-
-            // if user exists without subscription
             if (existsUser != null)
-            {
-                await _personRepository.DeletePerson(existsUser.PersonId);
-                await _userRepository.DeleteUser(existsUser.Id);
-            }
+                return Errors.User.AlreadyExists;
 
             // create person
             var person = Person.Create(name, $"{paternalSurname} {maternalSurname}");

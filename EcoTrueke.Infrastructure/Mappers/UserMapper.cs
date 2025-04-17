@@ -14,7 +14,6 @@ namespace EcoTrueke.Infrastructure.Mappers
                 Email = user.Email,
                 Password = user.Password,
                 AccountStatus = user.AccountStatus,
-                Subscription = user.Subscription,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt,
                 IsDeleted = user.IsDeleted
@@ -30,7 +29,6 @@ namespace EcoTrueke.Infrastructure.Mappers
                 Email = mongoUser.Email,
                 Password = mongoUser.Password,
                 AccountStatus = mongoUser.AccountStatus,
-                Subscription = mongoUser.Subscription,
                 CreatedAt = mongoUser.CreatedAt,
                 UpdatedAt = mongoUser.UpdatedAt,
                 IsDeleted = mongoUser.IsDeleted

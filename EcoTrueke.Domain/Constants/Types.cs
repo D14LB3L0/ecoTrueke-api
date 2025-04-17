@@ -2,11 +2,10 @@
 {
     public static class Types
     {
-        public static class Subscription
+        public static class AccountStatus
         {
             public const string Active = "active";
             public const string Suspended = "suspended";
-            public const string Pending = "pending";
         }
     }
 }

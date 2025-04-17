@@ -13,9 +13,7 @@ namespace EcoTrueke.Domain.Entities
 
         public string Password { get; set; }
 
-        public string AccountStatus { get; set; }  // "active", "suspended", "pending"
-
-        public string Subscription { get; set; } // "standard", "premium"
+        public string AccountStatus { get; set; }  // "active", "suspended"
 
         public DateTime UpdatedAt { get; set; }
 
@@ -30,7 +28,7 @@ namespace EcoTrueke.Domain.Entities
                 PersonId = personId,
                 Email = email,
                 Password = Encryptor.SHA256Hash(password),
-                AccountStatus = Types.Subscription.Pending,
+                AccountStatus = Types.AccountStatus.Active,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false
