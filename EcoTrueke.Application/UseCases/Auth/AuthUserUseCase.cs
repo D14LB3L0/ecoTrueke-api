@@ -7,6 +7,7 @@ using EcoTrueke.Infrastructure.Security;
 using EcoTrueke.Services.API;
 using EcoTrueke.Util.Security;
 using Newtonsoft.Json;
+using static EcoTrueke.Domain.Constants.Types;
 
 namespace EcoTrueke.Application.UseCases.Auth
 {
@@ -47,13 +48,14 @@ namespace EcoTrueke.Application.UseCases.Auth
             {
                 Id = existUser.Id,
                 Email = existUser.Email,
+                AccountStatus = existUser.AccountStatus,
             };
 
             // generate token
             var token = _tokenService.GenerateJWT(user);
 
             // mapping response
-            var loginResponse = new LoginResponse(token, user.Id, user.Email);
+            var loginResponse = new LoginResponse(token, user.Id, user.Email, user.AccountStatus);
 
             // login success
             return new Result { Code = Success.User.LoggedIn.Code, Data = (JsonConvert.SerializeObject(loginResponse)), Message = Success.User.LoggedIn.Message };
