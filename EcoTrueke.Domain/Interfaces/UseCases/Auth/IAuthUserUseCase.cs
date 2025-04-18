@@ -1,5 +1,4 @@
-﻿using EcoTrueke.Domain.Entities;
-using EcoTrueke.Services.API;
+﻿using EcoTrueke.Services.API;
 
 namespace EcoTrueke.Domain.Interfaces.UseCases.Auth
 {
@@ -8,5 +7,7 @@ namespace EcoTrueke.Domain.Interfaces.UseCases.Auth
         Task<Result> RegisterExecute(string name, string paternalSurname, string maternalSurname, string email, string password, string confirmPassword);
 
         Task<Result> LoginExecute(string email, string password);
+
+        Task<Result> ResetPasswordExecute(string email);
     };
 }

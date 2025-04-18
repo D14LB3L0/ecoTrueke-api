@@ -37,15 +37,5 @@ namespace EcoTrueke.Infrastructure.Security
                 );
             return new JwtSecurityTokenHandler().WriteToken(jwtConfig);
         }
-
-        private string GenerateRandomPassword()
-        {
-            const int longitud = 8; // password length
-            const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-            var random = new Random();
-
-            return new string(Enumerable.Repeat(caracteres, longitud)
-                                         .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
     }
 }

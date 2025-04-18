@@ -6,5 +6,6 @@ namespace EcoTrueke.Domain.Interfaces.Repositories
     {
         Task<Person> CreatePerson(Person person);
         Task DeletePerson(string personId);
+        Task<Person?> GetPersonById(string personId);
     }
 }

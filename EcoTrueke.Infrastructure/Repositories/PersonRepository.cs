@@ -1,4 +1,5 @@
-﻿using EcoTrueke.Domain.Interfaces.Repositories;
+﻿using EcoTrueke.Domain.Entities;
+using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Infrastructure.Mappers;
 
 namespace EcoTrueke.Infrastructure.Repositories
@@ -12,7 +13,7 @@ namespace EcoTrueke.Infrastructure.Repositories
             this._databaseRepository = databaseRepository;
         }
 
-        public async Task<Domain.Entities.Person> CreatePerson(Domain.Entities.Person person)
+        public async Task<Person> CreatePerson(Person person)
         {
             // map data
             var mongoPerson = PersonMapper.ToMongo(person);
@@ -29,6 +30,14 @@ namespace EcoTrueke.Infrastructure.Repositories
         public async Task DeletePerson(string personId)
         {
             await _databaseRepository.DeleteOneAsync<MongoModels.Person>(p => p.Id == personId);
+        }
+
+        public async Task<Person?> GetPersonById(string personId)
+        {
+            var person = await _databaseRepository.FindOneAsync<MongoModels.Person>(
+                 p => p.Id == personId && p.IsDeleted != true);
+
+            return PersonMapper.ToDomain(person);
         }
     }
 }

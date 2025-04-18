@@ -8,5 +8,6 @@ namespace EcoTrueke.Domain.Interfaces.Repositories
         Task<User> CreateUser(User user);
         Task<User?> GetUserByEmail(string email);
         Task DeleteUser(string userId);
+        Task ResetUserPassword(string userId, string newPasswordHash);
     }
 }

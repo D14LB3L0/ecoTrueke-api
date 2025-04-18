@@ -35,6 +35,32 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "account_status_suspended",
                 Message = "La cuenta está suspendida."
+            };       
+            public static Result FailedToResetPassword => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_reset_password",
+                Message = "No se pudo actualizar la contraseña."
+            };
+        }
+
+        public static class Mail
+        {
+            public static Result FailedToSendEmail => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_send_email",
+                Message = "No se pudo enviar el correo."
+            };
+        }
+
+        public static class Person
+        {
+            public static Result NotFoundPerson => new()
+            {
+                Code = Result.NOT_FOUND,
+                Type = "not_found_person",
+                Message = "La persona no ha sido encontrada."
             };
         }
     }

@@ -1,7 +1,5 @@
-﻿using EcoTrueke.Domain.Entities;
-using EcoTrueke.Domain.Interfaces.Repositories;
+﻿using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Infrastructure.Mappers;
-using EcoTrueke.Infrastructure.MongoModels;
 
 namespace EcoTrueke.Infrastructure.Repositories
 {
@@ -24,7 +22,7 @@ namespace EcoTrueke.Infrastructure.Repositories
 
             // map data 
             var domainUser = UserMapper.ToDomain(resultMongoUser);
-            
+
             return domainUser;
         }
 
@@ -38,8 +36,8 @@ namespace EcoTrueke.Infrastructure.Repositories
         {
             // get mongo user
             var mongoUser = await _databaseRepository.FindOneAsync<MongoModels.User>(
-                u => u.Email == email && u.IsDeleted != true
-                );
+              u => u.Email == email && u.IsDeleted != true
+            );
 
             // if the user doesn't exists
             if (mongoUser == null)
@@ -47,6 +45,15 @@ namespace EcoTrueke.Infrastructure.Repositories
 
             // map data to user
             return UserMapper.ToDomain(mongoUser);
+        }
+
+        public async Task ResetUserPassword(string userId, string newPasswordHash)
+        {
+            // update only password field
+            await _databaseRepository.UpdateOneAsync<MongoModels.User>(
+              u => u.Id == userId && u.IsDeleted != true,
+              u => u.Password = newPasswordHash
+            );
         }
     }
 }

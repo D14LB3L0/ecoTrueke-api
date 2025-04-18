@@ -13,6 +13,8 @@ builder.Services.AddSwaggerGen();
 // Dependency Injection
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Domain.Interfaces.Services;
+using EcoTrueke.Infrastructure.Communications;
 using EcoTrueke.Infrastructure.Repositories;
 using EcoTrueke.Infrastructure.Security;
 using Microsoft.Extensions.Configuration;
@@ -50,6 +51,7 @@ namespace EcoTrueke.Infrastructure
         private static IServiceCollection AddExternalServices(this IServiceCollection services)
         {
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IMailerService, MailerService>();
 
             return services;
         }

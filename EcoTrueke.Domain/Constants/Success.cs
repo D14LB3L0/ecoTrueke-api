@@ -18,6 +18,13 @@ namespace EcoTrueke.Domain.Constants
                 Type = "user_logged_in",
                 Message = "Inicio de sesión exitoso."
             };
+
+            public static Result ResetPassword => new()
+            {
+                Code = Result.OK,
+                Type = "reset_password",
+                Message = "Se ha enviado un correo con la nueva contraseña generada."
+            };
         }
     }
 }

@@ -61,10 +61,25 @@ namespace EcoTrueke.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = ex.Message
-                });
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
+
+        [HttpPatch("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _authUserUseCase.ResetPasswordExecute(request.Email);
+
+                return StatusCode(result.Code, new { message = result.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
             }
         }
     }

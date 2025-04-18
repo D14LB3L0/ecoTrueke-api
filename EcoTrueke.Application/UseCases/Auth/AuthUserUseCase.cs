@@ -3,6 +3,7 @@ using EcoTrueke.Domain.Entities;
 using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Domain.Interfaces.UseCases.Auth;
+using EcoTrueke.Infrastructure.Security;
 using EcoTrueke.Services.API;
 using EcoTrueke.Util.Security;
 using Newtonsoft.Json;
@@ -14,11 +15,13 @@ namespace EcoTrueke.Application.UseCases.Auth
         private readonly IUserRepository _userRepository;
         private readonly IPersonRepository _personRepository;
         private readonly ITokenService _tokenService;
-        public AuthUserUseCase(IUserRepository userRepository, IPersonRepository personRepository, ITokenService tokenService)
+        private readonly IMailerService _mailerService;
+        public AuthUserUseCase(IUserRepository userRepository, IPersonRepository personRepository, ITokenService tokenService, IMailerService mailerService)
         {
             _userRepository = userRepository;
             _personRepository = personRepository;
             _tokenService = tokenService;
+            _mailerService = mailerService;
         }
 
         public async Task<Result> LoginExecute(string email, string password)
@@ -76,6 +79,45 @@ namespace EcoTrueke.Application.UseCases.Auth
             var userResult = await _userRepository.CreateUser(user);
 
             return Success.User.Registered;
+        }
+
+        public async Task<Result> ResetPasswordExecute(string email)
+        {
+            // verify if user exists
+            var existUser = await _userRepository.GetUserByEmail(email);
+            if (existUser == null)
+                return Errors.User.NotFoundUser;
+
+            // create new password and hashed
+            string newPassword = PasswordGenerator.RandomPassword();
+            string hashedPassword = Encryptor.SHA256Hash(newPassword);
+
+            // updated password
+            try
+            {
+                await _userRepository.ResetUserPassword(existUser.Id, hashedPassword);
+            }
+            catch (Exception ex)
+            {
+                return Errors.User.FailedToResetPassword;
+            }
+
+            // send email to user
+            var person = await _personRepository.GetPersonById(existUser.PersonId);
+
+            if (person == null)
+                return Errors.Person.NotFoundPerson;
+
+            try
+            {
+                await _mailerService.SendMailResetPassword(existUser, person, newPassword);
+            }
+            catch (Exception ex)
+            {
+                return Errors.Mail.FailedToSendEmail;
+            }
+
+            return Success.User.ResetPassword;
         }
     }
 }
