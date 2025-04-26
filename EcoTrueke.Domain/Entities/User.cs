@@ -15,6 +15,10 @@ namespace EcoTrueke.Domain.Entities
 
         public string AccountStatus { get; set; }  // "active", "suspended"
 
+        public string TemporaryPassword { get; set; }
+
+        public DateTime TemporaryPasswordExpires { get; set; }
+
         public DateTime UpdatedAt { get; set; }
 
         public DateTime CreatedAt { get; set; }
@@ -33,6 +37,13 @@ namespace EcoTrueke.Domain.Entities
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false
             };
+        }
+
+        public void ResetPassword(string temporaryPassword)
+        {
+            this.TemporaryPassword = temporaryPassword;
+            this.TemporaryPasswordExpires = DateTime.UtcNow.AddHours(1);
+            this.UpdatedAt = DateTime.UtcNow;
         }
     }
 }

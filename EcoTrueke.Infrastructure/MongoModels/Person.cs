@@ -17,8 +17,8 @@ namespace EcoTrueke.Infrastructure.MongoModels
         public string LastName { get; set; }
 
         [BsonIgnoreIfNull]
-        [BsonElement("phoneNumber")]
-        public string PhoneNumber { get; set; }
+        [BsonElement("phone")]
+        public string Phone { get; set; }
 
         [BsonIgnoreIfNull]
         [BsonElement("address")]
@@ -37,8 +37,8 @@ namespace EcoTrueke.Infrastructure.MongoModels
         public string Gender { get; set; }  
 
         [BsonIgnoreIfNull]
-        [BsonElement("profilePictureUrl")]
-        public string ProfilePictureUrl { get; set; }
+        [BsonElement("profilePicture")]
+        public string ProfilePicture { get; set; }
 
         [BsonElement("updatedAt")]
         public DateTime UpdatedAt { get; set; }

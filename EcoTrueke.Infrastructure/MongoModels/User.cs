@@ -23,6 +23,12 @@ namespace EcoTrueke.Infrastructure.MongoModels
         [BsonElement("accountStatus")]
         public string AccountStatus { get; set; }
 
+        [BsonElement("temporaryPassword")]
+        public string TemporaryPassword { get; set; }
+
+        [BsonElement("temporaryPasswordExpires")]
+        public DateTime TemporaryPasswordExpires { get; set; }
+
         [BsonIgnoreIfNull]
         [BsonElement("subscription")]
         public string Subscription { get; set; }

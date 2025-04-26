@@ -47,12 +47,24 @@ namespace EcoTrueke.Infrastructure.Repositories
             return UserMapper.ToDomain(mongoUser);
         }
 
-        public async Task ResetUserPassword(string userId, string newPasswordHash)
+        public async Task ChangePassword(string userId, string newPasswordHash)
         {
             // update only password field
             await _databaseRepository.UpdateOneAsync<MongoModels.User>(
               u => u.Id == userId && u.IsDeleted != true,
               u => u.Password = newPasswordHash
+            );
+        }
+
+        public async Task UpdateUser(Domain.Entities.User user)
+        {
+            // map to mongo entity
+            var mongoUser = UserMapper.ToMongo(user);
+
+            // replace the document completely
+            await _databaseRepository.ReplaceOneAsync<MongoModels.User>(
+                u => u.Id == mongoUser.Id && u.IsDeleted != true,
+                mongoUser
             );
         }
     }

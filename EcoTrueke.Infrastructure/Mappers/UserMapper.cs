@@ -11,6 +11,8 @@
                 Email = user.Email,
                 Password = user.Password,
                 AccountStatus = user.AccountStatus,
+                TemporaryPassword = user.TemporaryPassword,
+                TemporaryPasswordExpires = user.TemporaryPasswordExpires,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt,
                 IsDeleted = user.IsDeleted
@@ -26,6 +28,8 @@
                 Email = mongoUser.Email,
                 Password = mongoUser.Password,
                 AccountStatus = mongoUser.AccountStatus,
+                TemporaryPassword = mongoUser.TemporaryPassword,
+                TemporaryPasswordExpires = mongoUser.TemporaryPasswordExpires,
                 CreatedAt = mongoUser.CreatedAt,
                 UpdatedAt = mongoUser.UpdatedAt,
                 IsDeleted = mongoUser.IsDeleted

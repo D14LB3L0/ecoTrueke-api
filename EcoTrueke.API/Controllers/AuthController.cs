@@ -65,7 +65,7 @@ namespace EcoTrueke.API.Controllers
             }
         }
 
-        [HttpPatch("reset-password")]
+        [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordRequest request)
         {
             try

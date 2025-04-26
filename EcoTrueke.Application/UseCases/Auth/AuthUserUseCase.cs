@@ -7,7 +7,6 @@ using EcoTrueke.Infrastructure.Security;
 using EcoTrueke.Services.API;
 using EcoTrueke.Util.Security;
 using Newtonsoft.Json;
-using static EcoTrueke.Domain.Constants.Types;
 
 namespace EcoTrueke.Application.UseCases.Auth
 {
@@ -36,12 +35,26 @@ namespace EcoTrueke.Application.UseCases.Auth
             if (existUser.AccountStatus == Types.AccountStatus.Suspended)
                 return Errors.User.AccountStatutsSuspended;
 
-            // convert normal password to hash
-            var hashPassword = Encryptor.SHA256Hash(password);
+            // verify if the password is temporary
+            bool isTemporaryPasswordValid = false;
 
-            // verify if the password is different
-            if (existUser.Password != hashPassword)
-                return Errors.User.IncorrectPassword;
+            if (existUser.TemporaryPasswordExpires > DateTime.UtcNow)
+            {
+                if (password == existUser.TemporaryPassword)
+                {
+                    isTemporaryPasswordValid = true;
+                }
+            }
+
+            if (!isTemporaryPasswordValid)
+            {
+                // convert normal password to hash
+                var hashPassword = Encryptor.SHA256Hash(password);
+
+                // verify if the password is different
+                if (existUser.Password != hashPassword)
+                    return Errors.User.IncorrectPassword;
+            }
 
             // mapping user
             var user = new User
@@ -91,13 +104,14 @@ namespace EcoTrueke.Application.UseCases.Auth
                 return Errors.User.NotFoundUser;
 
             // create new password and hashed
-            string newPassword = PasswordGenerator.RandomPassword();
-            string hashedPassword = Encryptor.SHA256Hash(newPassword);
+            string temporaryPassword = PasswordGenerator.RandomPassword();
 
             // updated password
+            existUser.ResetPassword(temporaryPassword);
+
             try
             {
-                await _userRepository.ResetUserPassword(existUser.Id, hashedPassword);
+                await _userRepository.UpdateUser(existUser);
             }
             catch (Exception ex)
             {
@@ -112,7 +126,7 @@ namespace EcoTrueke.Application.UseCases.Auth
 
             try
             {
-                await _mailerService.SendMailResetPassword(existUser, person, newPassword);
+                await _mailerService.SendMailResetPassword(existUser, person, temporaryPassword);
             }
             catch (Exception ex)
             {
