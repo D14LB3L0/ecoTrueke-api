@@ -29,7 +29,9 @@ namespace EcoTrueke.Infrastructure.Repositories
 
         public async Task DeletePerson(string personId)
         {
-            await _databaseRepository.DeleteOneAsync<MongoModels.Person>(p => p.Id == personId);
+            await _databaseRepository.UpdateOneAsync<MongoModels.Person>(
+                p => p.Id == personId && p.IsDeleted != true,
+                p => p.IsDeleted = true);
         }
 
         public async Task<Person?> GetPersonById(string personId)

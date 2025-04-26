@@ -24,6 +24,19 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.OK,
                 Type = "reset_password",
                 Message = "Se ha enviado un correo con la nueva contraseña generada."
+            };  
+            
+            public static Result ChangePassword => new()
+            {
+                Code = Result.OK,
+                Type = "change_password",
+                Message = "La contraseña se ha actualizado correctamente."
+            };      
+            public static Result AccountDeleted => new()
+            {
+                Code = Result.OK,
+                Type = "account_deleted",
+                Message = "La cuenta se ha eliminado correctamente."
             };
         }
     }

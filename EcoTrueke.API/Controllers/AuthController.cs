@@ -11,11 +11,11 @@ namespace EcoTrueke.API.Controllers
     [ApiController]
     public class AuthController : BaseController
     {
-        private readonly IAuthUserUseCase _authUserUseCase;
+        private readonly IAuthUseCase _authUseCase;
 
-        public AuthController(IAuthUserUseCase authUserUseCase)
+        public AuthController(IAuthUseCase authUseCase)
         {
-            _authUserUseCase = authUserUseCase;
+            _authUseCase = authUseCase;
         }
 
         [HttpPost("register")]
@@ -26,7 +26,7 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _authUserUseCase.RegisterExecute(
+                var result = await _authUseCase.RegisterExecute(
                     request.Name, request.PaternalSurname, request.MaternalSurname, request.Email, request.Password, request.ConfirmPassword
                     );
 
@@ -46,7 +46,7 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _authUserUseCase.LoginExecute(request.Email, request.Password);
+                var result = await _authUseCase.LoginExecute(request.Email, request.Password);
 
                 if (result.Data != null)
                 {
@@ -73,7 +73,22 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _authUserUseCase.ResetPasswordExecute(request.Email);
+                var result = await _authUseCase.ResetPasswordExecute(request.Email);
+
+                return StatusCode(result.Code, new { message = result.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAccount()
+        {
+            try
+            {
+                var result = await _authUseCase.DeleteAccount(LoggedUserId);
 
                 return StatusCode(result.Code, new { message = result.Message });
             }

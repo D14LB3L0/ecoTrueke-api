@@ -42,6 +42,18 @@ namespace EcoTrueke.Domain.Constants
                 Type = "failed_reset_password",
                 Message = "No se pudo actualizar la contraseña."
             };
+            public static Result FailedToDeleteUser => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_delete",
+                Message = "No se pudo eliminar al usuario."
+            };  
+            public static Result AccountDeleted => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "account_deleted",
+                Message = "La cuenta ha sido eliminada."
+            };
         }
 
         public static class Mail

@@ -8,7 +8,7 @@ namespace EcoTrueke.Application.UseCaseRegistration
     {
         public static IServiceCollection AddAuthUseCases(this IServiceCollection services)
         {
-            services.AddScoped<IAuthUserUseCase, AuthUserUseCase>();
+            services.AddScoped<IAuthUseCase, AuthUseCase>();
             
             return services;
         }

@@ -29,7 +29,9 @@ namespace EcoTrueke.Infrastructure.Repositories
         public async Task DeleteUser(string userId)
         {
             // delete user
-            await _databaseRepository.DeleteOneAsync<MongoModels.User>(u => u.Id == userId);
+            await _databaseRepository.UpdateOneAsync<MongoModels.User>(
+                u => u.Id == userId && u.IsDeleted != true,
+                u => u.IsDeleted = true);
         }
 
         public async Task<Domain.Entities.User?> GetUserByEmail(string email)
@@ -37,6 +39,21 @@ namespace EcoTrueke.Infrastructure.Repositories
             // get mongo user
             var mongoUser = await _databaseRepository.FindOneAsync<MongoModels.User>(
               u => u.Email == email && u.IsDeleted != true
+            );
+
+            // if the user doesn't exists
+            if (mongoUser == null)
+                return null;
+
+            // map data to user
+            return UserMapper.ToDomain(mongoUser);
+        }       
+        
+        public async Task<Domain.Entities.User?> GetUserById(string userId)
+        {
+            // get mongo user
+            var mongoUser = await _databaseRepository.FindOneAsync<MongoModels.User>(
+              u => u.Id == userId && u.IsDeleted != true
             );
 
             // if the user doesn't exists

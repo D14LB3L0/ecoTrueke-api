@@ -7,21 +7,43 @@ using EcoTrueke.Infrastructure.Security;
 using EcoTrueke.Services.API;
 using EcoTrueke.Util.Security;
 using Newtonsoft.Json;
+using static EcoTrueke.Domain.Constants.Errors;
 
 namespace EcoTrueke.Application.UseCases.Auth
 {
-    public class AuthUserUseCase : IAuthUserUseCase
+    public class AuthUseCase : IAuthUseCase
     {
         private readonly IUserRepository _userRepository;
         private readonly IPersonRepository _personRepository;
         private readonly ITokenService _tokenService;
         private readonly IMailerService _mailerService;
-        public AuthUserUseCase(IUserRepository userRepository, IPersonRepository personRepository, ITokenService tokenService, IMailerService mailerService)
+        public AuthUseCase(IUserRepository userRepository, IPersonRepository personRepository, ITokenService tokenService, IMailerService mailerService)
         {
             _userRepository = userRepository;
             _personRepository = personRepository;
             _tokenService = tokenService;
             _mailerService = mailerService;
+        }
+
+        public async Task<Result> DeleteAccount(string userId)
+        {
+            // veify if user exists
+            var existUser = await _userRepository.GetUserById(userId);
+            if (existUser == null)
+                return Errors.User.NotFoundUser;
+
+            // if user exists delete user
+            try
+            {
+                await _userRepository.DeleteUser(existUser.Id);
+            }
+            catch (Exception)
+            {
+                return Errors.User.FailedToDeleteUser;
+            }
+
+            return Success.User.AccountDeleted;
+
         }
 
         public async Task<Result> LoginExecute(string email, string password)
@@ -30,6 +52,12 @@ namespace EcoTrueke.Application.UseCases.Auth
             var existUser = await _userRepository.GetUserByEmail(email);
             if (existUser == null)
                 return Errors.User.NotFoundUser;
+
+            // verify if the account is deleted
+            if (existUser.IsDeleted == true)
+            {
+                return Errors.User.AccountDeleted;
+            }
 
             // verify account status
             if (existUser.AccountStatus == Types.AccountStatus.Suspended)
@@ -57,7 +85,7 @@ namespace EcoTrueke.Application.UseCases.Auth
             }
 
             // mapping user
-            var user = new User
+            var user = new Domain.Entities.User
             {
                 Id = existUser.Id,
                 Email = existUser.Email,
@@ -68,7 +96,7 @@ namespace EcoTrueke.Application.UseCases.Auth
             var token = _tokenService.GenerateJWT(user);
 
             // mapping response
-            var loginResponse = new LoginResponse(token, user.Id, user.Email, user.AccountStatus);
+            var loginResponse = new LoginResponse(token, user.Email, user.AccountStatus);
 
             // login success
             return new Result { Code = Success.User.LoggedIn.Code, Data = (JsonConvert.SerializeObject(loginResponse)), Message = Success.User.LoggedIn.Message };
@@ -86,11 +114,11 @@ namespace EcoTrueke.Application.UseCases.Auth
                 return Errors.User.AlreadyExists;
 
             // create person
-            var person = Person.Create(name, $"{paternalSurname} {maternalSurname}");
+            var person = Domain.Entities.Person.Create(name, $"{paternalSurname} {maternalSurname}");
             var personResult = await _personRepository.CreatePerson(person);
 
             // create user
-            var user = User.Create(personResult.Id, email, password);
+            var user = Domain.Entities.User.Create(personResult.Id, email, password);
             var userResult = await _userRepository.CreateUser(user);
 
             return Success.User.Registered;
@@ -103,17 +131,17 @@ namespace EcoTrueke.Application.UseCases.Auth
             if (existUser == null)
                 return Errors.User.NotFoundUser;
 
-            // create new password and hashed
+            // create temporary password
             string temporaryPassword = PasswordGenerator.RandomPassword();
 
-            // updated password
+            // assign to user
             existUser.ResetPassword(temporaryPassword);
 
             try
             {
                 await _userRepository.UpdateUser(existUser);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Errors.User.FailedToResetPassword;
             }
@@ -128,7 +156,7 @@ namespace EcoTrueke.Application.UseCases.Auth
             {
                 await _mailerService.SendMailResetPassword(existUser, person, temporaryPassword);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Errors.Mail.FailedToSendEmail;
             }
