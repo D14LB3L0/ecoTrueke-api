@@ -8,7 +8,8 @@
             {
                 Id = person.Id,
                 FirstName = person.FirstName,
-                LastName = person.LastName,
+                PaternalSurname = person.PaternalSurname,
+                MaternalSurname = person.MaternalSurname,
                 Phone = person.Phone,
                 Address = person.Address,
                 DocumentNumber = person.DocumentNumber,
@@ -27,7 +28,8 @@
             {
                 Id = mongoPerson.Id,
                 FirstName = mongoPerson.FirstName,
-                LastName = mongoPerson.LastName,
+                PaternalSurname = mongoPerson.PaternalSurname,
+                MaternalSurname = mongoPerson.MaternalSurname,
                 Phone = mongoPerson.Phone,
                 Address = mongoPerson.Address,
                 DocumentNumber = mongoPerson.DocumentNumber,

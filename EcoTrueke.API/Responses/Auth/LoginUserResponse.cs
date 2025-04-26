@@ -1,16 +1,20 @@
-﻿namespace EcoTrueke.API.Responses.Auth
+﻿using EcoTrueke.Domain.Entities;
+
+namespace EcoTrueke.API.Responses.Auth
 {
     public class LoginUserResponse
     {
         public string Token { get; set; }
-        public string Email { get; set; }
-        public string AccountStatus { get; set; }
 
-        public LoginUserResponse(string token, string email, string accountStatus)
+        public User User { get; set; }
+
+        public Person Person { get; set; }
+
+        public LoginUserResponse(string token, User user ,Person person)
         {
             Token = token;
-            Email = email;
-            AccountStatus = accountStatus;
+            User = user;
+            Person = person;
         }
     }
 }

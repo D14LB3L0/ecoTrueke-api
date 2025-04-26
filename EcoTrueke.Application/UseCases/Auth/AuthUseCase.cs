@@ -25,7 +25,7 @@ namespace EcoTrueke.Application.UseCases.Auth
             _mailerService = mailerService;
         }
 
-        public async Task<Result> DeleteAccount(string userId)
+        public async Task<Result> DeleteAccountExecute(string userId)
         {
             // veify if user exists
             var existUser = await _userRepository.GetUserById(userId);
@@ -92,11 +92,16 @@ namespace EcoTrueke.Application.UseCases.Auth
                 AccountStatus = existUser.AccountStatus,
             };
 
+            // get person 
+            var person = await _personRepository.GetPersonById(existUser.PersonId);
+            if (person == null)
+                return Errors.Person.NotFoundPerson;
+
             // generate token
             var token = _tokenService.GenerateJWT(user);
 
             // mapping response
-            var loginResponse = new LoginResponse(token, user.Email, user.AccountStatus);
+            var loginResponse = new LoginResponse(token, user, person);
 
             // login success
             return new Result { Code = Success.User.LoggedIn.Code, Data = (JsonConvert.SerializeObject(loginResponse)), Message = Success.User.LoggedIn.Message };
@@ -114,7 +119,7 @@ namespace EcoTrueke.Application.UseCases.Auth
                 return Errors.User.AlreadyExists;
 
             // create person
-            var person = Domain.Entities.Person.Create(name, $"{paternalSurname} {maternalSurname}");
+            var person = Domain.Entities.Person.Create(name, paternalSurname, maternalSurname);
             var personResult = await _personRepository.CreatePerson(person);
 
             // create user

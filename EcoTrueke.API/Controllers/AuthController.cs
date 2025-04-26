@@ -32,9 +32,9 @@ namespace EcoTrueke.API.Controllers
 
                 return StatusCode(result.Code, new { message = result.Message });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500);
             }
         }
 
@@ -59,9 +59,9 @@ namespace EcoTrueke.API.Controllers
 
                 return StatusCode(result.Code, new { message = result.Message });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500);
             }
         }
 
@@ -77,9 +77,9 @@ namespace EcoTrueke.API.Controllers
 
                 return StatusCode(result.Code, new { message = result.Message });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500);
             }
         }
 
@@ -88,13 +88,13 @@ namespace EcoTrueke.API.Controllers
         {
             try
             {
-                var result = await _authUseCase.DeleteAccount(LoggedUserId);
+                var result = await _authUseCase.DeleteAccountExecute(LoggedUserId);
 
                 return StatusCode(result.Code, new { message = result.Message });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500);
             }
         }
     }

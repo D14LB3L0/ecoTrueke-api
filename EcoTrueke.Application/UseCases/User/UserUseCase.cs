@@ -15,7 +15,7 @@ namespace EcoTrueke.Application.UseCases.User
             _userRepository = userRepository;
         }
 
-        public async Task<Result> ChangePassword(string userId, string password)
+        public async Task<Result> ChangePasswordExecute(string userId, string password)
         {
             // verify if user exists
             var existUser = await _userRepository.GetUserById(userId);

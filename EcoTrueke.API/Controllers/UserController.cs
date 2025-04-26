@@ -24,13 +24,13 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _userUseCase.ChangePassword(LoggedUserId, request.Password);
+                var result = await _userUseCase.ChangePasswordExecute(LoggedUserId, request.Password);
 
                 return StatusCode(result.Code, new { message = result.Message });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500);
             }
         }
 

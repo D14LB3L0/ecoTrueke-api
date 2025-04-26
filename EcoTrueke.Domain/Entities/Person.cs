@@ -1,4 +1,4 @@
-﻿    namespace EcoTrueke.Domain.Entities
+﻿namespace EcoTrueke.Domain.Entities
 {
     public class Person
     {
@@ -6,7 +6,9 @@
 
         public string FirstName { get; set; }
 
-        public string LastName { get; set; }
+        public string PaternalSurname { get; set; }
+        
+        public string MaternalSurname { get; set; }
 
         public string Phone { get; set; }
 
@@ -26,12 +28,13 @@
 
         public bool IsDeleted { get; set; }
 
-        public static Person Create (string firstName, string lastName)
+        public static Person Create(string firstName, string paternalSurname, string maternalSurname)
         {
             return new()
             {
                 FirstName = firstName,
-                LastName = lastName,
+                PaternalSurname = paternalSurname,
+                MaternalSurname = maternalSurname,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false

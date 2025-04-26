@@ -4,6 +4,6 @@ namespace EcoTrueke.Domain.Interfaces.UseCases.User
 {
     public interface IUserUseCase
     {
-        Task<Result> ChangePassword(string userId, string password);
+        Task<Result> ChangePasswordExecute(string userId, string password);
     }
 }

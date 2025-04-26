@@ -10,6 +10,6 @@ namespace EcoTrueke.Domain.Interfaces.UseCases.Auth
 
         Task<Result> ResetPasswordExecute(string email);
 
-        Task<Result> DeleteAccount(string userId);
+        Task<Result> DeleteAccountExecute(string userId);
     };
 }

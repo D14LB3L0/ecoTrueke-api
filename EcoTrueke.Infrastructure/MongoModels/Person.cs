@@ -13,8 +13,11 @@ namespace EcoTrueke.Infrastructure.MongoModels
         [BsonElement("firstName")]
         public string FirstName { get; set; }
 
-        [BsonElement("lastName")]
-        public string LastName { get; set; }
+        [BsonElement("paternalSurname")]
+        public string PaternalSurname { get; set; }
+
+        [BsonElement("maternalSurname")]
+        public string MaternalSurname { get; set; }
 
         [BsonIgnoreIfNull]
         [BsonElement("phone")]

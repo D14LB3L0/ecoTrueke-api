@@ -1,16 +1,18 @@
-﻿namespace EcoTrueke.Application.UseCases.Auth
+﻿using EcoTrueke.Domain.Entities;
+
+namespace EcoTrueke.Application.UseCases.Auth
 {
     public class LoginResponse
     {
         public string Token { get; set; }
-        public string Email { get; set; }
-        public string AccountStatus { get; set; }
+        public Domain.Entities.User User { get; set; }
+        public Person Person { get; set; }
 
-        public LoginResponse(string token,  string email, string accountStatus)
+        public LoginResponse(string token, Domain.Entities.User user, Person person)
         {
             Token = token;
-            Email = email;
-            AccountStatus = accountStatus;
+            User = user;
+            Person = person;
         }
     }
 }
