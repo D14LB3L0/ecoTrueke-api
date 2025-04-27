@@ -10,8 +10,8 @@ namespace EcoTrueke.Infrastructure.MongoModels
         [BsonElement("id")]
         public string Id { get; set; }
 
-        [BsonElement("firstName")]
-        public string FirstName { get; set; }
+        [BsonElement("name")]
+        public string name { get; set; }
 
         [BsonElement("paternalSurname")]
         public string PaternalSurname { get; set; }

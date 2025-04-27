@@ -1,5 +1,4 @@
 ﻿using EcoTrueke.Domain.Constants;
-using EcoTrueke.Domain.Entities;
 using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Domain.Interfaces.UseCases.Auth;
@@ -53,12 +52,6 @@ namespace EcoTrueke.Application.UseCases.Auth
             if (existUser == null)
                 return Errors.User.NotFoundUser;
 
-            // verify if the account is deleted
-            if (existUser.IsDeleted == true)
-            {
-                return Errors.User.AccountDeleted;
-            }
-
             // verify account status
             if (existUser.AccountStatus == Types.AccountStatus.Suspended)
                 return Errors.User.AccountStatutsSuspended;
@@ -104,7 +97,7 @@ namespace EcoTrueke.Application.UseCases.Auth
             var loginResponse = new LoginResponse(token, user, person);
 
             // login success
-            return new Result { Code = Success.User.LoggedIn.Code, Data = (JsonConvert.SerializeObject(loginResponse)), Message = Success.User.LoggedIn.Message };
+            return new Result { Code = Success.User.LoggedIn.Code, Data = JsonConvert.SerializeObject(loginResponse), Message = Success.User.LoggedIn.Message };
         }
 
         public async Task<Result> RegisterExecute(string name, string paternalSurname, string maternalSurname, string email, string password, string confirmPassword)
@@ -163,7 +156,7 @@ namespace EcoTrueke.Application.UseCases.Auth
             }
             catch (Exception)
             {
-                return Errors.Mail.FailedToSendEmail;
+                return Mail.FailedToSendEmail;
             }
 
             return Success.User.ResetPassword;

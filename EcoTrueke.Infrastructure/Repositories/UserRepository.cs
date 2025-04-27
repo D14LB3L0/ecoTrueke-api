@@ -79,7 +79,7 @@ namespace EcoTrueke.Infrastructure.Repositories
             var mongoUser = UserMapper.ToMongo(user);
 
             // replace the document completely
-            await _databaseRepository.ReplaceOneAsync<MongoModels.User>(
+            await _databaseRepository.ReplaceOneAsync(
                 u => u.Id == mongoUser.Id && u.IsDeleted != true,
                 mongoUser
             );

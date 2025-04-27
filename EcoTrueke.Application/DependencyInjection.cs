@@ -9,7 +9,8 @@ namespace EcoTrueke.Application
         {
             services
                 .AddAuthUseCases()
-                .AddUserUseCases();
+                .AddUserUseCases()
+                .addPersonUseCase();
 
             return services;
         }

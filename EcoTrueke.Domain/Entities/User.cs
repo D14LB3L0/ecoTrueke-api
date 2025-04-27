@@ -41,9 +41,9 @@ namespace EcoTrueke.Domain.Entities
 
         public void ResetPassword(string temporaryPassword)
         {
-            this.TemporaryPassword = temporaryPassword;
-            this.TemporaryPasswordExpires = DateTime.UtcNow.AddHours(1);
-            this.UpdatedAt = DateTime.UtcNow;
+            TemporaryPassword = temporaryPassword;
+            TemporaryPasswordExpires = DateTime.UtcNow.AddHours(1);
+            UpdatedAt = DateTime.UtcNow;
         }
     }
 }

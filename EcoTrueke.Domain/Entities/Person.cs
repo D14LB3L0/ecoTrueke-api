@@ -4,10 +4,10 @@
     {
         public string Id { get; set; }
 
-        public string FirstName { get; set; }
+        public string name { get; set; }
 
         public string PaternalSurname { get; set; }
-        
+
         public string MaternalSurname { get; set; }
 
         public string Phone { get; set; }
@@ -32,13 +32,41 @@
         {
             return new()
             {
-                FirstName = firstName,
+                name = firstName,
                 PaternalSurname = paternalSurname,
                 MaternalSurname = maternalSurname,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false
             };
+        }
+
+        public void EditPerson(string firstName, string paternalSurname, string maternalSurname, string phone,
+            string address, string documentNumber, string documentType, string gender)
+        {
+            name = firstName;
+            PaternalSurname = paternalSurname;
+            MaternalSurname = maternalSurname;
+            Phone = phone;
+            Address = address;
+            DocumentNumber = documentNumber;
+            DocumentType = documentType;
+            Gender = gender;
+            //ProfilePicture = profilePicture;
+        }
+
+        public bool IsSameData(string firstName, string paternalSurname, string maternalSurname, string phone,
+            string address, string documentNumber, string documentType, string gender)
+        {
+            return
+                name == firstName &&
+                PaternalSurname == paternalSurname &&
+                MaternalSurname == maternalSurname &&
+                Phone == phone &&
+                Address == address &&
+                DocumentNumber == documentNumber &&
+                DocumentType == documentType &&
+                Gender == gender;
         }
     }
 }

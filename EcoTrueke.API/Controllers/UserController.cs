@@ -33,7 +33,5 @@ namespace EcoTrueke.API.Controllers
                 return StatusCode(500);
             }
         }
-
-      
     }
 }

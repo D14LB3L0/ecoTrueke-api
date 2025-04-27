@@ -7,7 +7,7 @@
             return new MongoModels.Person
             {
                 Id = person.Id,
-                FirstName = person.FirstName,
+                name = person.name,
                 PaternalSurname = person.PaternalSurname,
                 MaternalSurname = person.MaternalSurname,
                 Phone = person.Phone,
@@ -27,7 +27,7 @@
             return new Domain.Entities.Person
             {
                 Id = mongoPerson.Id,
-                FirstName = mongoPerson.FirstName,
+                name = mongoPerson.name,
                 PaternalSurname = mongoPerson.PaternalSurname,
                 MaternalSurname = mongoPerson.MaternalSurname,
                 Phone = mongoPerson.Phone,

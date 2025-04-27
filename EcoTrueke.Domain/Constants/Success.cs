@@ -39,5 +39,15 @@ namespace EcoTrueke.Domain.Constants
                 Message = "La cuenta se ha eliminado correctamente."
             };
         }
+
+        public static class Person
+        {
+            public static Result UpdatedPerson => new()
+            {
+                Code = Result.OK,
+                Type = "account_deleted",
+                Message = "Los datos se han actualizado correctamente."
+            };
+        }
     }
 }

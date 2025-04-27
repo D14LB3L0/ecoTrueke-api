@@ -52,7 +52,7 @@ namespace EcoTrueke.API.Controllers
                 {
                     var loginResponse = JsonConvert.DeserializeObject<LoginUserResponse>(result.Data);
 
-                    var apiResponse = new ApiResponse<LoginUserResponse>(loginResponse, result.Message);
+                    var apiResponse = new ApiResponse<LoginUserResponse>(loginResponse!, result.Message);
                     return StatusCode(result.Code, apiResponse);
 
                 }

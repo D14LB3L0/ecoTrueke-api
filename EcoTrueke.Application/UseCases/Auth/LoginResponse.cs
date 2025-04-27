@@ -6,9 +6,9 @@ namespace EcoTrueke.Application.UseCases.Auth
     {
         public string Token { get; set; }
         public Domain.Entities.User User { get; set; }
-        public Person Person { get; set; }
+        public Domain.Entities.Person Person { get; set; }
 
-        public LoginResponse(string token, Domain.Entities.User user, Person person)
+        public LoginResponse(string token, Domain.Entities.User user, Domain.Entities.Person person)
         {
             Token = token;
             User = user;

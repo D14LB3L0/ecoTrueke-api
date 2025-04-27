@@ -41,5 +41,16 @@ namespace EcoTrueke.Infrastructure.Repositories
 
             return PersonMapper.ToDomain(person);
         }
+
+        public async Task UpdatePerson(Person person)
+        {
+            // map to mongo entity
+            var mongoPerson = PersonMapper.ToMongo(person);
+
+            // replace the document completely
+            await _databaseRepository.ReplaceOneAsync(
+                p => p.Id == mongoPerson.Id && p.IsDeleted != true
+                , mongoPerson);
+        }
     }
 }

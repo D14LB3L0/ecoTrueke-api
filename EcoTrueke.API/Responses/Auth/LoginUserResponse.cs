@@ -8,9 +8,9 @@ namespace EcoTrueke.API.Responses.Auth
 
         public User User { get; set; }
 
-        public Person Person { get; set; }
+        public Domain.Entities.Person Person { get; set; }
 
-        public LoginUserResponse(string token, User user ,Person person)
+        public LoginUserResponse(string token, User user ,Domain.Entities.Person person)
         {
             Token = token;
             User = user;
