@@ -1,7 +1,9 @@
 ﻿using EcoTrueke.Domain.Constants;
 using EcoTrueke.Domain.Interfaces.Repositories;
+using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Domain.Interfaces.UseCases.Person;
 using EcoTrueke.Services.API;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace EcoTrueke.Application.UseCases.Person
@@ -10,15 +12,17 @@ namespace EcoTrueke.Application.UseCases.Person
     {
         private readonly IUserRepository _userRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly IFileService _fileService;
 
-        public PersonUseCase(IUserRepository userRepository, IPersonRepository personRepository)
+        public PersonUseCase(IUserRepository userRepository, IPersonRepository personRepository, IFileService fileService)
         {
             _userRepository = userRepository;
             _personRepository = personRepository;
+            _fileService = fileService;
         }
 
         public async Task<Result> EditPerson(string userId, string firstName, string paternalSurname, string maternalSurname, string phone,
-            string address, string documentNumber, string documentType, string gender)
+            string documentNumber, string documentType, string? address = null, string? gender = null, IFormFile? profilePicture = null, string? profilePictureRemove = null)
         {
             // veify if user exists
             var existUser = await _userRepository.GetUserById(userId);
@@ -30,14 +34,25 @@ namespace EcoTrueke.Application.UseCases.Person
             if (person == null)
                 return Errors.Person.NotFoundPerson;
 
+            // identify if profile picture exist
+            string? profilePicturePath = person.ProfilePicture;
+
+            if (profilePicture != null)
+                profilePicturePath = await _fileService.SaveProfilePictureAsync(person.Id, profilePicture);
+
+            if (profilePictureRemove != null)
+            {
+                await _fileService.DeleteProfilePictureAsync(person.ProfilePicture);
+                profilePicturePath = "";
+            }
+
             // without changes
-            if (person.IsSameData(firstName, paternalSurname, maternalSurname, phone, address, documentNumber, documentType, gender))
+            if (person.IsSameData(firstName, paternalSurname, maternalSurname, phone, address, documentNumber, documentType, gender, profilePicturePath))
                 return Errors.Person.Unchanged;
-            
+
             // update person
             person.EditPerson(firstName, paternalSurname, maternalSurname, phone,
-            address, documentNumber, documentType, gender);
-
+            address, documentNumber, documentType, gender, profilePicturePath);
 
             try
             {

@@ -28,7 +28,7 @@ namespace EcoTrueke.API.Controllers
                     return BadRequest(ModelState);
 
                 var result = await _personUseCase.EditPerson(LoggedUserId, request.name, request.PaternalSurname, request.MaternalSurname,
-                    request.Phone, request.Address, request.DocumentNumber, request.DocumentType, request.Gender);
+                    request.Phone, request.DocumentNumber, request.DocumentType, request.Address, request.Gender, request.ProfilePicture, request.ProfilePictureRemove);
 
                 if (result.Data != null)
                 {

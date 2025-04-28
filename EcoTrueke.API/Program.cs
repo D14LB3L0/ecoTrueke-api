@@ -1,5 +1,7 @@
-using EcoTrueke.Infrastructure;
+﻿using EcoTrueke.Infrastructure;
 using EcoTrueke.Application;
+using Microsoft.Extensions.FileProviders;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,22 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles(); 
+
+var uploadsPath = builder.Configuration["FileStorage:UploadFolderPath"];
+
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadsPath),
+    RequestPath = "/EcoTrueke" // public url
+});
+
 
 app.UseCors("AllowSpecificOrigins");
 

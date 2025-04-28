@@ -4,6 +4,10 @@ namespace EcoTrueke.API.Requests.Person
 {
     public class EditPersonRequest
     {
+        public IFormFile? ProfilePicture { get; set; }
+
+        public string? ProfilePictureRemove { get; set; }
+
         [Required]
         public string name { get; set; }
 
@@ -25,8 +29,5 @@ namespace EcoTrueke.API.Requests.Person
         public string DocumentType { get; set; }    // "dni"
 
         public string? Gender { get; set; } = null;  // "female", "male", "other"
-
-        //[Required]
-        //public string ProfilePicture { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Infrastructure.Communications;
 using EcoTrueke.Infrastructure.Repositories;
 using EcoTrueke.Infrastructure.Security;
+using EcoTrueke.Infrastructure.Upload;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
@@ -52,6 +53,7 @@ namespace EcoTrueke.Infrastructure
         {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IMailerService, MailerService>();
+            services.AddScoped<IFileService, FileService>();
 
             return services;
         }

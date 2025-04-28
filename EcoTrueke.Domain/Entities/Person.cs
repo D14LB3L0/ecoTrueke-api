@@ -12,15 +12,15 @@
 
         public string Phone { get; set; }
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         public string DocumentNumber { get; set; }
 
-        public string DocumentType { get; set; }    // "dni"
+        public string DocumentType { get; set; }  // "dni"
 
-        public string Gender { get; set; }  // "female", "male", "other"
+        public string? Gender { get; set; }  // "female", "male", "other"
 
-        public string ProfilePicture { get; set; }
+        public string? ProfilePicture { get; set; }
 
         public DateTime UpdatedAt { get; set; }
 
@@ -42,7 +42,7 @@
         }
 
         public void EditPerson(string firstName, string paternalSurname, string maternalSurname, string phone,
-            string address, string documentNumber, string documentType, string gender)
+            string address, string documentNumber, string documentType, string gender, string? profilePicture = null)
         {
             name = firstName;
             PaternalSurname = paternalSurname;
@@ -52,11 +52,11 @@
             DocumentNumber = documentNumber;
             DocumentType = documentType;
             Gender = gender;
-            //ProfilePicture = profilePicture;
+            ProfilePicture = profilePicture;
         }
 
         public bool IsSameData(string firstName, string paternalSurname, string maternalSurname, string phone,
-            string address, string documentNumber, string documentType, string gender)
+            string address, string documentNumber, string documentType, string gender, string? profilePicture = null)
         {
             return
                 name == firstName &&
@@ -66,7 +66,8 @@
                 Address == address &&
                 DocumentNumber == documentNumber &&
                 DocumentType == documentType &&
-                Gender == gender;
+                Gender == gender &&
+                ProfilePicture == profilePicture;
         }
     }
 }
