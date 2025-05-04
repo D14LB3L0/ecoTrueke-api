@@ -20,8 +20,8 @@ namespace EcoTrueke.API.Controllers
             _notificationUseCase = notificationUseCase;
         }
 
-        [HttpGet("pagination")]
-        public async Task<IActionResult> GetPaginatedNotifications([FromBody] GetPaginatedNotificationsRequest request)
+        [HttpPost("pagination")]
+        public async Task<IActionResult> GetPaginatedNotifications([FromQuery] GetPaginatedNotificationsRequest request)
         {
             try
             {
