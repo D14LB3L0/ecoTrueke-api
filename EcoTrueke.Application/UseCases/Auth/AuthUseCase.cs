@@ -14,12 +14,15 @@ namespace EcoTrueke.Application.UseCases.Auth
     {
         private readonly IUserRepository _userRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly INotificationRepository _notificationRepository;
         private readonly ITokenService _tokenService;
         private readonly IMailerService _mailerService;
-        public AuthUseCase(IUserRepository userRepository, IPersonRepository personRepository, ITokenService tokenService, IMailerService mailerService)
+
+        public AuthUseCase(IUserRepository userRepository, IPersonRepository personRepository, INotificationRepository notificationRepository, ITokenService tokenService, IMailerService mailerService)
         {
             _userRepository = userRepository;
             _personRepository = personRepository;
+            _notificationRepository = notificationRepository;
             _tokenService = tokenService;
             _mailerService = mailerService;
         }
@@ -112,12 +115,40 @@ namespace EcoTrueke.Application.UseCases.Auth
                 return Errors.User.AlreadyExists;
 
             // create person
-            var person = Domain.Entities.Person.Create(name, paternalSurname, maternalSurname);
-            var personResult = await _personRepository.CreatePerson(person);
+            try
+            {
+                var person = Domain.Entities.Person.Create(name, paternalSurname, maternalSurname);
+                var personResult = await _personRepository.CreatePerson(person);
 
-            // create user
-            var user = Domain.Entities.User.Create(personResult.Id, email, password);
-            var userResult = await _userRepository.CreateUser(user);
+                try
+                {
+                    // create user
+                    var user = Domain.Entities.User.Create(personResult.Id, email, password);
+                    var userResult = await _userRepository.CreateUser(user);
+
+                    // if user is created successfully, notification created
+                    var notification = Domain.Entities.Notification.FinishSetup(userResult.Id);
+                    try
+                    {
+                        await _notificationRepository.CreateNotification(notification);
+
+                    }
+                    catch (Exception)
+                    {
+                        return Errors.Notification.FailedToCreateNotification;
+                    }
+                }
+                catch (Exception)
+                {
+                    return Errors.Person.FailedToCreatePerson;
+                }
+
+            }
+            catch (Exception)
+            {
+                return Errors.Person.FailedToCreatePerson;
+            }
+
 
             return Success.User.Registered;
         }

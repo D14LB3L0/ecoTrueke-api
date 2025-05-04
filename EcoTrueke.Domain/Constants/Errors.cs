@@ -11,13 +11,13 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.NOT_FOUND,
                 Type = "not_found_user",
                 Message = "El usuario no ha sido encontrado."
-            };        
+            };
             public static Result PasswordsDoNotMatch => new()
             {
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "passwords_do_not_match",
                 Message = "Las contraseñas no coinciden."
-            };      
+            };
             public static Result IncorrectPassword => new()
             {
                 Code = Result.UNPROCESSABLE_ENTITY,
@@ -29,13 +29,13 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "user_already_exists",
                 Message = "El usuario ya existe."
-            };   
+            };
             public static Result AccountStatutsSuspended => new()
             {
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "account_status_suspended",
                 Message = "La cuenta está suspendida."
-            };       
+            };
             public static Result FailedToResetPassword => new()
             {
                 Code = Result.UNPROCESSABLE_ENTITY,
@@ -47,7 +47,13 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "failed_delete",
                 Message = "No se pudo eliminar al usuario."
-            };        
+            };
+            public static Result FailedToCreateUser => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_create_user",
+                Message = "No se pudo crear al usuario"
+            };
         }
 
         public static class Mail
@@ -67,7 +73,7 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.NOT_FOUND,
                 Type = "not_found_person",
                 Message = "La persona no ha sido encontrada."
-            };  
+            };
             public static Result FailedUpdate => new()
             {
                 Code = Result.NOT_FOUND,
@@ -79,6 +85,21 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "unchanged",
                 Message = "No se realizaron cambios"
+            };
+            public static Result FailedToCreatePerson => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_create_person",
+                Message = "No se pudo crear a la persona"
+            };
+        }
+        public static class Notification
+        {
+            public static Result FailedToCreateNotification => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_create_notification",
+                Message = "No se pudo crear la notificación"
             };
         }
     }

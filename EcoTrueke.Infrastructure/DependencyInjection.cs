@@ -1,6 +1,8 @@
-﻿using EcoTrueke.Domain.Interfaces.Repositories;
+﻿using EcoTrueke.Domain.Interfaces.Queries;
+using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Infrastructure.Communications;
+using EcoTrueke.Infrastructure.Queries;
 using EcoTrueke.Infrastructure.Repositories;
 using EcoTrueke.Infrastructure.Security;
 using EcoTrueke.Infrastructure.Upload;
@@ -17,7 +19,8 @@ namespace EcoTrueke.Infrastructure
             services
                 .AddMongoDB(configuration)
                 .AddRepositories()
-                .AddExternalServices();
+                .AddExternalServices()
+                .AddQueries();
 
             return services;
         }
@@ -45,6 +48,14 @@ namespace EcoTrueke.Infrastructure
             services.AddScoped<IDatabaseRepository, MongoDatabaseRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddQueries(this IServiceCollection services)
+        {
+            services.AddScoped<INotificationQuery, NotificationQuery>();
 
             return services;
         }

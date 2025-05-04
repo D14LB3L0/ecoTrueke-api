@@ -49,5 +49,15 @@ namespace EcoTrueke.Domain.Constants
                 Message = "Los datos se han actualizado correctamente."
             };
         }
+
+        public static class Notification
+        {
+            public static Result GetPaginatedNotifications => new()
+            {
+                Code = Result.OK,
+                Type = "get_paginated_notifications",
+                Message = "Notificaciones obtenidas correctamente."
+            };
+        }
     }
 }
