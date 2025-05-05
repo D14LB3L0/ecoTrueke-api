@@ -101,6 +101,12 @@ namespace EcoTrueke.Domain.Constants
                 Type = "failed_create_notification",
                 Message = "No se pudo crear la notificación"
             };
+            public static Result FailedMarkAsRead => new()
+            {
+                Code = Result.OK,
+                Type = "failed_mark_as_read",
+                Message = "No se pudo actualizar el estado de las notificaciones."
+            };
         }
     }
 }

@@ -5,5 +5,7 @@ namespace EcoTrueke.Domain.Interfaces.Repositories
     public interface INotificationRepository
     {
         Task<Notification> CreateNotification(Notification notification);
+
+        Task MarkAsRead(IEnumerable<string> notificationIds);
     }
 }

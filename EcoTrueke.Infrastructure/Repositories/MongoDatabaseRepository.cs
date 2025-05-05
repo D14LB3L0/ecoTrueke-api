@@ -38,8 +38,8 @@ namespace EcoTrueke.Infrastructure.Repositories
         public async Task<T> InsertOneAsync<T>(T document)
         {
             var collection = GetCollection<T>();
-            await collection.InsertOneAsync(document); 
-            return document; 
+            await collection.InsertOneAsync(document);
+            return document;
         }
 
         public async Task ReplaceOneAsync<T>(Expression<Func<T, bool>> filter, T document)

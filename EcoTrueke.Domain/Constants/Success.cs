@@ -57,6 +57,12 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.OK,
                 Type = "get_paginated_notifications",
                 Message = "Notificaciones obtenidas correctamente."
+            }; 
+            public static Result MarkAsRead => new()
+            {
+                Code = Result.OK,
+                Type = "mark_as_read",
+                Message = "Las notificaciones se han marcado como leídas correctamente."
             };
         }
     }

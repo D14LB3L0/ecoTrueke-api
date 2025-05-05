@@ -39,5 +39,23 @@ namespace EcoTrueke.API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpPost("mark-read")]
+        public async Task<IActionResult> MarkAsRead([FromBody] MarkAsReadRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _notificationUseCase.MarkAsReadExecute(request.NotificationIds);
+
+                return StatusCode(result.Code, result); 
+            }
+            catch (Exception)
+            {
+                return BadRequest(500);
+            }
+        }
     }
 }

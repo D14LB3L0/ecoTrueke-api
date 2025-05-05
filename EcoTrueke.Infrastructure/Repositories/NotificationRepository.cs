@@ -1,6 +1,7 @@
 ﻿using EcoTrueke.Domain.Entities;
 using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Infrastructure.Mappers;
+using MongoDB.Driver;
 
 namespace EcoTrueke.Infrastructure.Repositories
 {
@@ -25,6 +26,17 @@ namespace EcoTrueke.Infrastructure.Repositories
             var domainNotification = NotificationMapper.ToDomain(resultMongoNotification);
 
             return domainNotification;
+        }
+
+        public async Task MarkAsRead(IEnumerable<string> notificationIds)
+        {
+            foreach (var id in notificationIds)
+            {
+                await _databaseRepository.UpdateOneAsync<MongoModels.Notification>(
+                    n => n.Id == id,
+                    n => n.IsRead = true
+                );
+            }
         }
     }
 }
