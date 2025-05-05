@@ -17,7 +17,7 @@ namespace EcoTrueke.Application.UseCases.Notification
 
         public async Task<Result> GetPaginatedNotificationsExecute(int page, int amountPage, string loggedUserId)
         {
-            var (notifications, totalPages) = await _notificationQuery.GetPaginatedNotifications(page, amountPage, loggedUserId);
+                var (notifications, totalPages) = await _notificationQuery.GetPaginatedNotifications(page, amountPage, loggedUserId);
 
             var paginationResponse = new GetPaginatedNotificationsResponse(notifications, totalPages);
 

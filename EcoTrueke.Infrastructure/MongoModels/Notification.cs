@@ -28,8 +28,14 @@ namespace EcoTrueke.Infrastructure.MongoModels
         [BsonElement("isRead")]
         public bool IsRead { get; set; }
 
+        [BsonElement("link")]
+        public string Link { get; set; }
+
         [BsonElement("createdAt")]
-        [BsonIgnoreIfNull]
         public DateTime CreatedAt { get; set; }
+
+        [BsonIgnoreIfNull]
+        [BsonElement("isDeleted")]
+        public bool IsDeleted { get; set; }
     }
 }

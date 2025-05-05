@@ -16,6 +16,10 @@ namespace EcoTrueke.Domain.Entities
 
         public bool IsRead { get; set; }
 
+        public string Link { get; set; }
+
+        public bool IsDeleted { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public static Notification FinishSetup(string userId)
@@ -27,7 +31,9 @@ namespace EcoTrueke.Domain.Entities
                 Message = Notifications.FinishSetup.Message, 
                 Type = Notifications.FinishSetup.Type,
                 IsRead = false,
-                CreatedAt = DateTime.UtcNow
+                Link = Notifications.FinishSetup.Link,
+                CreatedAt = DateTime.UtcNow,
+                IsDeleted = false,
             };
         }
     }

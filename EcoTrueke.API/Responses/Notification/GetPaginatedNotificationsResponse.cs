@@ -19,12 +19,19 @@
             public string Title { get; set; }
             public string Message { get; set; }
             public string Type { get; set; }
+            public bool IsRead { get; set; }
+            public string Link { get; set; }
+            public DateTime CreatedAt { get; set; }
+
             public NotificationsResponse(Domain.Entities.Notification notification)
             {
                 Id = notification.Id;
                 Title = notification.Title;
                 Message = notification.Message;
                 Type = notification.Type;
+                IsRead = notification.IsRead;
+                Link = notification.Link;
+                CreatedAt = notification.CreatedAt;
             }
         }
     }

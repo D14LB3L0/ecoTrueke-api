@@ -40,7 +40,9 @@ namespace EcoTrueke.Infrastructure.Queries
                     { "_id", 1 },
                     { "title", 1 },
                     { "message", 1 },
-                    { "type", 1 }
+                    { "type", 1 },
+                    { "link", 1 },
+                    { "createdAt", 1 }
                 })
 
             };

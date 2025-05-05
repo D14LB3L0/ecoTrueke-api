@@ -1,10 +1,8 @@
 ﻿using EcoTrueke.API.Requests.Notification;
-using EcoTrueke.API.Responses.Auth;
 using EcoTrueke.API.Responses;
-using EcoTrueke.Application.UseCases.Auth;
+using EcoTrueke.API.Responses.Notification;
 using EcoTrueke.Domain.Interfaces.UseCases.Notification;
 using Microsoft.AspNetCore.Mvc;
-using EcoTrueke.API.Responses.Notification;
 using Newtonsoft.Json;
 
 namespace EcoTrueke.API.Controllers
@@ -30,7 +28,7 @@ namespace EcoTrueke.API.Controllers
 
                 var result = await _notificationUseCase.GetPaginatedNotificationsExecute(request.Page, request.AmountPage, LoggedUserId);
 
-                    var paginatedNotificationResponse = JsonConvert.DeserializeObject<GetPaginatedNotificationsResponse>(result.Data!);
+                var paginatedNotificationResponse = JsonConvert.DeserializeObject<GetPaginatedNotificationsResponse>(result.Data!);
 
                 var apiResponse = new ApiResponse<GetPaginatedNotificationsResponse>(paginatedNotificationResponse!, result.Message);
 

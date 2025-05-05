@@ -14,7 +14,9 @@ namespace EcoTrueke.Infrastructure.Mappers
                 Message = notification.Message,
                 Type = notification.Type,
                 IsRead = notification.IsRead,
-                CreatedAt = notification.CreatedAt
+                Link = notification.Link,
+                CreatedAt = notification.CreatedAt,
+                IsDeleted = notification.IsDeleted,
             };
         }
 
@@ -28,7 +30,9 @@ namespace EcoTrueke.Infrastructure.Mappers
                 Message = mongoNotification.Message,
                 Type = mongoNotification.Type,
                 IsRead = mongoNotification.IsRead,
-                CreatedAt = mongoNotification.CreatedAt
+                Link = mongoNotification.Link,
+                CreatedAt = mongoNotification.CreatedAt,
+                IsDeleted = mongoNotification.IsDeleted,
             };
         }
 
