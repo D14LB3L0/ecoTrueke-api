@@ -58,7 +58,7 @@ namespace EcoTrueke.API.Controllers
             }
         }
 
-        [HttpDelete("${notificationId}")]
+        [HttpDelete("{notificationId}")]
         public async Task<IActionResult> DeleteNotification(string notificationId)
         {
             try

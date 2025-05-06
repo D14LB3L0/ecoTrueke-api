@@ -21,7 +21,7 @@ namespace EcoTrueke.Infrastructure.Queries
             // filter notification read
             var filter = new BsonDocument("$and", new BsonArray
             {
-                new BsonDocument("isRead", new BsonDocument("$ne", true)),
+                new BsonDocument("isDeleted", new BsonDocument("$ne", true)),
                 new BsonDocument("userId", new ObjectId(loggedUserId))
             });
 
@@ -42,7 +42,8 @@ namespace EcoTrueke.Infrastructure.Queries
                     { "message", 1 },
                     { "type", 1 },
                     { "link", 1 },
-                    { "createdAt", 1 }
+                    { "createdAt", 1 },
+                    { "isRead", 1 }
                 })
 
             };
