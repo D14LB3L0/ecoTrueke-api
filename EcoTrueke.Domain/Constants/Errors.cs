@@ -106,6 +106,12 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.OK,
                 Type = "failed_mark_as_read",
                 Message = "No se pudo actualizar el estado de las notificaciones."
+            };  
+            public static Result FailedDelete => new()
+            {
+                Code = Result.OK,
+                Type = "failed_delete",
+                Message = "No se pudo eliminar la notificación."
             };
         }
     }

@@ -18,6 +18,21 @@ namespace EcoTrueke.Application.UseCases.Notification
             _notificationRepository = notificationRepository;
         }
 
+        public async Task<Result> DeleteNotificationExecute(string notifiationId)
+        {
+            try
+            {
+                await _notificationRepository.DeleteNotification(notifiationId);
+
+                return new Result { Code = Success.Notification.DeleteNotification.Code, Message = Success.Notification.DeleteNotification.Message };
+            }
+            catch (Exception)
+            {
+                return new Result { Code = Errors.Notification.FailedDelete.Code, Message = Errors.Notification.FailedDelete.Message };
+            }
+
+        }
+
         public async Task<Result> GetPaginatedNotificationsExecute(int page, int amountPage, string loggedUserId)
         {
             var (notifications, totalPages) = await _notificationQuery.GetPaginatedNotifications(page, amountPage, loggedUserId);

@@ -64,6 +64,12 @@ namespace EcoTrueke.Domain.Constants
                 Type = "mark_as_read",
                 Message = "Las notificaciones se han marcado como leídas correctamente."
             };
+            public static Result DeleteNotification => new()
+            {
+                Code = Result.OK,
+                Type = "notification_delete",
+                Message = "La notificación se ha eliminado correctamente."
+            };
         }
     }
 }

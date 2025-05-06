@@ -40,7 +40,7 @@ namespace EcoTrueke.API.Controllers
             }
         }
 
-        [HttpPost("mark-read")]
+        [HttpPatch("mark-read")]
         public async Task<IActionResult> MarkAsRead([FromBody] MarkAsReadRequest request)
         {
             try
@@ -50,7 +50,21 @@ namespace EcoTrueke.API.Controllers
 
                 var result = await _notificationUseCase.MarkAsReadExecute(request.NotificationIds);
 
-                return StatusCode(result.Code, result); 
+                return StatusCode(result.Code, result);
+            }
+            catch (Exception)
+            {
+                return BadRequest(500);
+            }
+        }
+
+        [HttpDelete("${notificationId}")]
+        public async Task<IActionResult> DeleteNotification(string notificationId)
+        {
+            try
+            {
+                var result = await _notificationUseCase.DeleteNotificationExecute(notificationId);
+                return StatusCode(result.Code, result);
             }
             catch (Exception)
             {
