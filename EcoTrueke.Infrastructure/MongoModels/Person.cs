@@ -46,7 +46,7 @@ namespace EcoTrueke.Infrastructure.MongoModels
         [BsonElement("updatedAt")]
         public DateTime UpdatedAt { get; set; }
 
-        [BsonElement("creadtedAt")]
+        [BsonElement("createdAt")]
         public DateTime CreatedAt { get; set; }
 
         [BsonElement("isDeleted")]

@@ -22,6 +22,8 @@ namespace EcoTrueke.Domain.Entities
 
         public DateTime CreatedAt { get; set; }
 
+        public DateTime UpdatedAt { get; set; }
+
         public static Notification FinishSetup(string userId)
         {
             return new Notification
@@ -33,6 +35,7 @@ namespace EcoTrueke.Domain.Entities
                 IsRead = false,
                 Link = Notifications.FinishSetup.Link,
                 CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false,
             };
         }

@@ -92,6 +92,12 @@ namespace EcoTrueke.Domain.Constants
                 Type = "failed_create_person",
                 Message = "No se pudo crear a la persona"
             };
+            public static Result FailedToDeletePerson => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_delete",
+                Message = "No se pudo eliminar a la persona."
+            };
         }
         public static class Notification
         {

@@ -38,6 +38,15 @@ namespace EcoTrueke.Application.UseCases.Auth
             try
             {
                 await _userRepository.DeleteUser(existUser.Id);
+
+                try
+                {
+                    await _personRepository.DeletePerson(existUser.PersonId);
+                }
+                catch (Exception)
+                {
+                    return Errors.Person.FailedToDeletePerson;
+                }
             }
             catch (Exception)
             {
@@ -45,7 +54,6 @@ namespace EcoTrueke.Application.UseCases.Auth
             }
 
             return Success.User.AccountDeleted;
-
         }
 
         public async Task<Result> LoginExecute(string email, string password)
@@ -168,6 +176,7 @@ namespace EcoTrueke.Application.UseCases.Auth
 
             try
             {
+                existUser.UpdatedAt = DateTime.UtcNow;
                 await _userRepository.UpdateUser(existUser);
             }
             catch (Exception)

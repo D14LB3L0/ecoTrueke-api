@@ -30,8 +30,12 @@ namespace EcoTrueke.Infrastructure.Repositories
         public async Task DeleteNotification(string notificationId)
         {
             await _databaseRepository.UpdateOneAsync<MongoModels.Notification>(
-                u => u.Id == notificationId && u.IsDeleted != true,
-                u => u.IsDeleted = true);
+                n => n.Id == notificationId && n.IsDeleted != true,
+                n =>
+                {
+                    n.UpdatedAt = DateTime.UtcNow;
+                    n.IsDeleted = true;
+                });
         }
 
         public async Task MarkAsRead(IEnumerable<string> notificationIds)
@@ -40,7 +44,10 @@ namespace EcoTrueke.Infrastructure.Repositories
             {
                 await _databaseRepository.UpdateOneAsync<MongoModels.Notification>(
                     n => n.Id == id,
-                    n => n.IsRead = true
+                    n => {
+                        n.UpdatedAt = DateTime.UtcNow;
+                        n.IsRead = true;
+                    }
                 );
             }
         }

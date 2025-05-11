@@ -53,6 +53,7 @@
             DocumentType = documentType;
             Gender = gender;
             ProfilePicture = profilePicture;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public bool IsSameData(string firstName, string paternalSurname, string maternalSurname, string phone,

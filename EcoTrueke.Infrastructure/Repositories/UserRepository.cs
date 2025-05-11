@@ -30,8 +30,11 @@ namespace EcoTrueke.Infrastructure.Repositories
         {
             // delete user
             await _databaseRepository.UpdateOneAsync<MongoModels.User>(
-                u => u.Id == userId && u.IsDeleted != true,
-                u => u.IsDeleted = true);
+            u => u.Id == userId && u.IsDeleted != true,
+            u => {
+                u.UpdatedAt = DateTime.UtcNow;
+                u.IsDeleted = true;
+            });
         }
 
         public async Task<Domain.Entities.User?> GetUserByEmail(string email)
@@ -69,8 +72,10 @@ namespace EcoTrueke.Infrastructure.Repositories
             // update only password field
             await _databaseRepository.UpdateOneAsync<MongoModels.User>(
               u => u.Id == userId && u.IsDeleted != true,
-              u => u.Password = newPasswordHash
-            );
+               u => {
+                   u.UpdatedAt = DateTime.UtcNow;
+                   u.Password = newPasswordHash;
+               });
         }
 
         public async Task UpdateUser(Domain.Entities.User user)

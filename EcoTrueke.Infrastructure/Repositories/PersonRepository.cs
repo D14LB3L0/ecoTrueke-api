@@ -31,7 +31,10 @@ namespace EcoTrueke.Infrastructure.Repositories
         {
             await _databaseRepository.UpdateOneAsync<MongoModels.Person>(
                 p => p.Id == personId && p.IsDeleted != true,
-                p => p.IsDeleted = true);
+                p => {
+                    p.UpdatedAt = DateTime.UtcNow;
+                    p.IsDeleted = true;
+                });
         }
 
         public async Task<Person?> GetPersonById(string personId)
