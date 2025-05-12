@@ -22,6 +22,7 @@ namespace EcoTrueke.Infrastructure.MongoModels
         [BsonElement("name")]
         public string Name { get; set; }
 
+        [BsonIgnoreIfNull]
         [BsonElement("description")]
         public string? Description { get; set; }
 

@@ -20,7 +20,7 @@ namespace EcoTrueke.Application.UseCases.Product
             _userRepository = userRepository;
         }
 
-        public async Task<Result> RegisterProductExecute(string userId, string name, string typeTranscription, IEnumerable<string> category, string condition, int quantity, string? description = null, IFormFile? productPicture = null)
+        public async Task<Result> RegisterProductExecute(string userId, string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, IFormFile? productPicture = null)
         {
             try
             {

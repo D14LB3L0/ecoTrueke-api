@@ -32,7 +32,7 @@ namespace EcoTrueke.Domain.Entities
         public bool IsDeleted { get; set; }
 
 
-        public static Product RegisterProduct(string userId, string name, string typeTranscription, IEnumerable<string> category, string condition, int quantity, string? description = null, string? productPicture = null)
+        public static Product RegisterProduct(string userId, string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, string? productPicture = null)
         {
             return new()
             {
@@ -43,7 +43,7 @@ namespace EcoTrueke.Domain.Entities
                 Status = Types.ProductStatus.Pending,
                 Description = description,
                 Condition = condition,
-                Quantity = quantity,
+                Quantity = int.Parse(quantity),
                 ProductPicture = productPicture,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,

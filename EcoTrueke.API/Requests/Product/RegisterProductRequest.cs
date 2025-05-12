@@ -21,6 +21,6 @@ namespace EcoTrueke.API.Requests.Product
         public string Condition { get; set; }  
         
         [Required]
-        public int Quantity { get; set; }
+        public string Quantity { get; set; }
     }
 }

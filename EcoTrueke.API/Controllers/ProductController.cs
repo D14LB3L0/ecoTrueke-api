@@ -17,7 +17,7 @@ namespace EcoTrueke.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterProduct([FromBody] RegisterProductRequest request)
+        public async Task<IActionResult> RegisterProduct([FromForm] RegisterProductRequest request)
         {
             try
             {
