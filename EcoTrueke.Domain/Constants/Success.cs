@@ -71,5 +71,15 @@ namespace EcoTrueke.Domain.Constants
                 Message = "La notificación se ha eliminado correctamente."
             };
         }
+
+        public static class Product
+        {
+            public static Result RegisteredProduct => new()
+            {
+                Code = Result.OK,
+                Type = "registered_product",
+                Message = "Producto registrado correctamente."
+            };
+        }
     }
 }
