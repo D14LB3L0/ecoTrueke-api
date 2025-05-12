@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using Microsoft.AspNetCore.Http;
 
 namespace EcoTrueke.Infrastructure.MongoModels
 {
@@ -31,7 +32,10 @@ namespace EcoTrueke.Infrastructure.MongoModels
         public IEnumerable<string> Category { get; set; }  // clothes - toys
 
         [BsonElement("condition")]
-        public string Condition { get; set; }
+        public string Condition { get; set; }  
+        
+        [BsonElement("quantity")]
+        public int Quantity { get; set; }
 
         [BsonElement("status")]
         public string Status { get; set; } // pending - traded - sold - donnated

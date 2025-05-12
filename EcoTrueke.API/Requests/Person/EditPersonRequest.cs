@@ -9,7 +9,7 @@ namespace EcoTrueke.API.Requests.Person
         public string? ProfilePictureRemove { get; set; }
 
         [Required]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public string PaternalSurname { get; set; }

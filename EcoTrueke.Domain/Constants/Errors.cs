@@ -120,5 +120,15 @@ namespace EcoTrueke.Domain.Constants
                 Message = "No se pudo eliminar la notificación."
             };
         }
+
+        public static class Product
+        {
+            public static Result FailedRegisterProduct => new()
+            {
+                Code = Result.OK,
+                Type = "failed_register_product",
+                Message = "No se pudo registrar el producto."
+            };
+        }
     }
 }

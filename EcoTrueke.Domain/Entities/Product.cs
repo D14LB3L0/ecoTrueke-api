@@ -1,4 +1,7 @@
-﻿namespace EcoTrueke.Domain.Entities
+﻿using EcoTrueke.Domain.Constants;
+using Microsoft.AspNetCore.Http;
+
+namespace EcoTrueke.Domain.Entities
 {
     public class Product
     {
@@ -20,6 +23,8 @@
 
         public string Status { get; set; } // pending - traded - sold - donnated
 
+        public int Quantity { get; set; }
+
         public DateTime UpdatedAt { get; set; }
 
         public DateTime CreatedAt { get; set; }
@@ -27,7 +32,7 @@
         public bool IsDeleted { get; set; }
 
 
-        public static Product RegisterProduct(string userId, string name, string typeTranscription, IEnumerable<string> category, string status, string? description = null, string? productPicture = null)
+        public static Product RegisterProduct(string userId, string name, string typeTranscription, IEnumerable<string> category, string condition, int quantity, string? description = null, string? productPicture = null)
         {
             return new()
             {
@@ -35,8 +40,10 @@
                 Name = name,
                 TypeTranscription = typeTranscription,
                 Category = category,
-                Status = status,
+                Status = Types.ProductStatus.Pending,
                 Description = description,
+                Condition = condition,
+                Quantity = quantity,
                 ProductPicture = productPicture,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,

@@ -27,7 +27,7 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _personUseCase.EditPerson(LoggedUserId, request.name, request.PaternalSurname, request.MaternalSurname,
+                var result = await _personUseCase.EditPerson(LoggedUserId, request.Name, request.PaternalSurname, request.MaternalSurname,
                     request.Phone, request.DocumentNumber, request.DocumentType, request.Address, request.Gender, request.ProfilePicture, request.ProfilePictureRemove);
 
                 if (result.Data != null)
@@ -43,7 +43,7 @@ namespace EcoTrueke.API.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(500);
             }
         }
     }

@@ -34,6 +34,27 @@ namespace EcoTrueke.Infrastructure.Upload
             await Task.CompletedTask;
         }
 
+        public async Task<string> SaveProductPictureAsync(string personId, IFormFile file)
+        {
+            var basePath = Path.Combine(_basePath, "Persons", personId, "Product");
+
+
+            if (!Directory.Exists(basePath))
+                Directory.CreateDirectory(basePath);
+
+            var extension = Path.GetExtension(file.FileName);
+
+            var fileName = $"{Guid.NewGuid()}{extension}";
+            var filePath = Path.Combine(basePath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // return relative url 
+            return Path.Combine("Persons", personId, "Product", fileName).Replace("\\", "/");
+        }
 
         public async Task<string> SaveProfilePictureAsync(string personId, IFormFile file)
         {
@@ -55,5 +76,6 @@ namespace EcoTrueke.Infrastructure.Upload
             // return relative url 
             return Path.Combine("Persons", personId, "Profile", fileName).Replace("\\", "/");
         }
+
     }
 }
