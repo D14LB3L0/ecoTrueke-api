@@ -86,6 +86,13 @@ namespace EcoTrueke.Domain.Constants
                 Type = "get_paginated_products",
                 Message = "Productos obtenidos correctamente."
             };
+
+            public static Result ProductFound => new()
+            {
+                Code = Result.OK,
+                Type = "product_found",
+                Message = "Producto obtenido correctamente."
+            };
         }
     }
 }

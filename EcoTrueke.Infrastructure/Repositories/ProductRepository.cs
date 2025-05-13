@@ -13,6 +13,19 @@ namespace EcoTrueke.Infrastructure.Repositories
             _databaseRepository = databaseRepository;
         }
 
+        public async Task<Product?> GetProductById(string productId)
+        {
+            var mongoProduct = await _databaseRepository.FindOneAsync<MongoModels.Product>(
+                p => p.Id == productId && p.IsDeleted != true
+                );
+
+            // if the user doesn't exists
+            if (mongoProduct == null)
+                return null;
+
+            return ProductMapper.ToDomain(mongoProduct);
+        }
+
         public async Task RegisterProduct(Product product)
         {
             // map data

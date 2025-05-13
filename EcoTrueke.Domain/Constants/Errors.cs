@@ -129,6 +129,12 @@ namespace EcoTrueke.Domain.Constants
                 Type = "failed_register_product",
                 Message = "No se pudo registrar el producto."
             };
+            public static Result NotFoundProduct => new()
+            {
+                Code = Result.NOT_FOUND,
+                Type = "not_found_product",
+                Message = "El producto no ha sido encontrado."
+            };
         }
     }
 }

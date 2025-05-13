@@ -1,5 +1,4 @@
-﻿using EcoTrueke.Application.UseCases.Notification;
-using EcoTrueke.Domain.Constants;
+﻿using EcoTrueke.Domain.Constants;
 using EcoTrueke.Domain.Interfaces.Queries;
 using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Domain.Interfaces.Services;
@@ -17,7 +16,7 @@ namespace EcoTrueke.Application.UseCases.Product
         private readonly IFileService _fileService;
         private readonly IUserRepository _userRepository;
 
-        public ProductUseCase(IProductRepository productRepository, IProductQuery productQuery,IFileService fileService, IUserRepository userRepository)
+        public ProductUseCase(IProductRepository productRepository, IProductQuery productQuery, IFileService fileService, IUserRepository userRepository)
         {
             _productRepository = productRepository;
             _productQuery = productQuery;
@@ -32,6 +31,21 @@ namespace EcoTrueke.Application.UseCases.Product
             var paginationResponse = new GetPaginatedProductResponse(products, totalPages);
 
             return new Result { Code = Success.Product.GetPaginatedProducts.Code, Message = Success.Product.GetPaginatedProducts.Message, Data = JsonConvert.SerializeObject(paginationResponse) };
+        }
+
+        public async Task<Result> GetProductExecute(string productId)
+        {
+            // get product 
+            var existProduct = await _productRepository.GetProductById(productId);
+
+            // validate if product exists
+            if (existProduct == null)
+                return Errors.Product.NotFoundProduct;
+
+            var productResponse = new ProductResponse(existProduct);
+
+            return new Result { Code = Success.Product.ProductFound.Code, Data = JsonConvert.SerializeObject(productResponse), Message = Success.Product.ProductFound.Message };
+
         }
 
         public async Task<Result> RegisterProductExecute(string userId, string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, IFormFile? productPicture = null)

@@ -24,7 +24,7 @@ namespace EcoTrueke.API.Controllers
         {
             try
             {
-                if(!ModelState.IsValid)
+                if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
                 var result = await _productUseCase.GetPaginatedProductExecute(request.Page, request.AmountPage, LoggedUserId);
@@ -41,6 +41,24 @@ namespace EcoTrueke.API.Controllers
             }
         }
 
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetProduct(string productId)
+            {
+            try
+            {
+                var result = await _productUseCase.GetProductExecute(productId);
+
+                var productResponse = JsonConvert.DeserializeObject<GetProductResponse>(result.Data);
+
+                var apiResponse = new ApiResponse<GetProductResponse>(productResponse, result.Message);
+
+                return StatusCode(result.Code, apiResponse);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> RegisterProduct([FromForm] RegisterProductRequest request)
@@ -50,7 +68,7 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _productUseCase.RegisterProductExecute(LoggedUserId,request.Name, request.TypeTranscription,request.Category, request.Condition, request.Quantity, request.Description, request.ProductPicture);
+                var result = await _productUseCase.RegisterProductExecute(LoggedUserId, request.Name, request.TypeTranscription, request.Category, request.Condition, request.Quantity, request.Description, request.ProductPicture);
 
                 return StatusCode(result.Code, new { message = result.Message });
 
@@ -59,7 +77,6 @@ namespace EcoTrueke.API.Controllers
             {
                 return StatusCode(500);
             }
-
         }
     }
 }
