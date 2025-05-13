@@ -57,6 +57,7 @@ namespace EcoTrueke.Infrastructure
         private static IServiceCollection AddQueries(this IServiceCollection services)
         {
             services.AddScoped<INotificationQuery, NotificationQuery>();
+            services.AddScoped<IProductQuery, ProductQuery>();
 
             return services;
         }
