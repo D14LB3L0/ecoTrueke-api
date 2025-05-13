@@ -23,7 +23,7 @@ namespace EcoTrueke.Infrastructure.Queries
             var filter = new BsonDocument("$and", new BsonArray
             {
                 new BsonDocument("isDeleted", new BsonDocument("$ne", true)),
-                new BsonDocument("status", new BsonDocument("$ne", Types.ProductStatus.Pending)),
+                new BsonDocument("status", new BsonDocument("$eq", Types.ProductStatus.Pending)),
                 new BsonDocument("userId", new ObjectId(loggedUserId))
             });
 

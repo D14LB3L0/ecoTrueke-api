@@ -1,23 +1,37 @@
-﻿using EcoTrueke.Domain.Constants;
+﻿using EcoTrueke.Application.UseCases.Notification;
+using EcoTrueke.Domain.Constants;
+using EcoTrueke.Domain.Interfaces.Queries;
 using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Domain.Interfaces.UseCases.Product;
 using EcoTrueke.Services.API;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace EcoTrueke.Application.UseCases.Product
 {
     public class ProductUseCase : IProductUseCase
     {
         private readonly IProductRepository _productRepository;
+        private readonly IProductQuery _productQuery;
         private readonly IFileService _fileService;
         private readonly IUserRepository _userRepository;
 
-        public ProductUseCase(IProductRepository productRepository, IFileService fileService, IUserRepository userRepository)
+        public ProductUseCase(IProductRepository productRepository, IProductQuery productQuery,IFileService fileService, IUserRepository userRepository)
         {
             _productRepository = productRepository;
+            _productQuery = productQuery;
             _fileService = fileService;
             _userRepository = userRepository;
+        }
+
+        public async Task<Result> GetPaginatedProductExecute(int page, int amountPage, string loggedUserId)
+        {
+            var (products, totalPages) = await _productQuery.GetPaginatedProducts(page, amountPage, loggedUserId);
+
+            var paginationResponse = new GetPaginatedProductResponse(products, totalPages);
+
+            return new Result { Code = Success.Product.GetPaginatedProducts.Code, Message = Success.Product.GetPaginatedProducts.Message, Data = JsonConvert.SerializeObject(paginationResponse) };
         }
 
         public async Task<Result> RegisterProductExecute(string userId, string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, IFormFile? productPicture = null)

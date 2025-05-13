@@ -1,6 +1,9 @@
 ﻿using EcoTrueke.API.Requests.Product;
+using EcoTrueke.API.Responses;
+using EcoTrueke.API.Responses.Product;
 using EcoTrueke.Domain.Interfaces.UseCases.Product;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace EcoTrueke.API.Controllers
 {
@@ -15,6 +18,29 @@ namespace EcoTrueke.API.Controllers
         {
             _productUseCase = productUseCase;
         }
+
+        [HttpGet("pagination")]
+        public async Task<IActionResult> GetPaginatedProducts([FromQuery] GetPaginatedProductRequest request)
+        {
+            try
+            {
+                if(!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _productUseCase.GetPaginatedProductExecute(request.Page, request.AmountPage, LoggedUserId);
+
+                var paginatedProductsResponse = JsonConvert.DeserializeObject<GetPaginatedProductResponse>(result.Data);
+
+                var apiResponse = new ApiResponse<GetPaginatedProductResponse>(paginatedProductsResponse!, result.Message);
+
+                return StatusCode(result.Code, apiResponse);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> RegisterProduct([FromForm] RegisterProductRequest request)

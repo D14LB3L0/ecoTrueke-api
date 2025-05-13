@@ -34,7 +34,7 @@ namespace EcoTrueke.API.Controllers
 
                 return StatusCode(result.Code, apiResponse);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500);
             }
