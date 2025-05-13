@@ -80,6 +80,12 @@ namespace EcoTrueke.Domain.Constants
                 Type = "registered_product",
                 Message = "Producto registrado correctamente."
             };
+            public static Result GetPaginatedProducts => new()
+            {
+                Code = Result.OK,
+                Type = "get_paginated_products",
+                Message = "Productos obtenidos correctamente."
+            };
         }
     }
 }

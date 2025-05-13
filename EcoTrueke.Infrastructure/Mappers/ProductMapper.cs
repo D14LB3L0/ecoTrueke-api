@@ -1,4 +1,6 @@
-﻿namespace EcoTrueke.Infrastructure.Mappers
+﻿using EcoTrueke.Domain.Entities;
+
+namespace EcoTrueke.Infrastructure.Mappers
 {
     public static class ProductMapper
     {
@@ -40,6 +42,11 @@
                 CreatedAt = mongoProduct.CreatedAt,
                 IsDeleted = mongoProduct.IsDeleted,
             };
+        }
+
+        public static List<Product> ToDomain(List<MongoModels.Product> mongoProducts)
+        {
+            return mongoProducts.Select(p => ToDomain(p)).ToList();
         }
     }
 }
