@@ -1,5 +1,4 @@
 ﻿using EcoTrueke.Domain.Constants;
-using Microsoft.AspNetCore.Http;
 
 namespace EcoTrueke.Domain.Entities
 {
@@ -49,6 +48,30 @@ namespace EcoTrueke.Domain.Entities
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false
             };
+        }
+
+        public bool IsSameData(string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, string? productPicture = null)
+        {
+            return
+                Name == name &&
+                TypeTranscription == typeTranscription &&
+                Category.SequenceEqual(category) &&
+                Description == description &&
+                Condition == condition &&
+                Quantity == int.Parse(quantity) &&
+                ProductPicture == productPicture;
+        }
+
+        public void EditProduct(string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, string? productPicture = null)
+        {
+            Name = name;
+            TypeTranscription = typeTranscription;
+            Category = category;
+            Condition = condition;
+            Quantity = int.Parse(quantity);
+            Description = description;
+            ProductPicture = productPicture;
+            
         }
     }
 }

@@ -57,7 +57,7 @@ namespace EcoTrueke.Infrastructure.Communications
             var content = File.ReadAllText(Path.Combine(_environment.ContentRootPath, MAIL_ECOTRUEKE_RESET_PASSWORD))
                 .Replace("{Password}", newPassword);
 
-            await SendSupportCallMail(user.Email, "Solicitud de contraseña", "Restablecer contraseña", $"Hola {person.name} {person.PaternalSurname} {person.MaternalSurname}", content);
+            await SendSupportCallMail(user.Email, "Solicitud de contraseña", "Restablecer contraseña", $"Hola {person.Name} {person.PaternalSurname} {person.MaternalSurname}", content);
 
             return new Result { Code = Result.OK };
         }

@@ -34,5 +34,16 @@ namespace EcoTrueke.Infrastructure.Repositories
             // insert product
             await _databaseRepository.InsertOneAsync(mongoProduct);
         }
+
+        public async Task UpdateProduct(Product product)
+        {
+            // map to mongo entity
+            var mongoProduct = ProductMapper.ToMongo(product);
+
+            // replace the document completly
+            await _databaseRepository.ReplaceOneAsync(
+                p => p.Id == product.Id && p.IsDeleted != true,
+                mongoProduct);
+        }
     }
 }

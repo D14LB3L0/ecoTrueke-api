@@ -24,6 +24,54 @@ namespace EcoTrueke.Application.UseCases.Product
             _userRepository = userRepository;
         }
 
+        public async Task<Result> EditProductExecute(string userId, string productId, string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, IFormFile? productPicture = null, string? productPictureRemove = null)
+        {
+            // get user
+            var existUser = await _userRepository.GetUserById(userId);
+
+            if (existUser == null)
+                return Errors.User.NotFoundUser;
+
+            // get product
+            var product = await _productRepository.GetProductById(productId);
+
+            // validate if product exists
+            if (product == null)
+                return Errors.Product.NotFoundProduct;
+
+            // identify if product picture exist
+            string? productPicturePath = product.ProductPicture;
+
+            if (productPicture != null)
+                productPicturePath = await _fileService.SaveProductPictureAsync(existUser.PersonId, productPicture);
+
+            if (productPictureRemove != null)
+            {
+                await _fileService.DeletPictureAsync(product.ProductPicture);
+
+                productPicturePath = "";
+            }
+
+            // without changes
+            if (product.IsSameData(name, typeTranscription, category, condition, quantity, description, productPicturePath))
+                return Errors.Product.Unchanged;
+
+            // update product
+            product.EditProduct(name, typeTranscription, category, condition, quantity, description, productPicturePath);
+
+            try
+            {
+                await _productRepository.UpdateProduct(product);
+            }
+            catch (Exception ex)
+            {
+                return Errors.Product.FailedUpdate;
+            }
+
+            return new Result { Code = Success.Product.UpdatedProduct.Code, Message = Success.Product.UpdatedProduct.Message };
+
+        }
+
         public async Task<Result> GetPaginatedProductExecute(int page, int amountPage, string loggedUserId)
         {
             var (products, totalPages) = await _productQuery.GetPaginatedProducts(page, amountPage, loggedUserId);

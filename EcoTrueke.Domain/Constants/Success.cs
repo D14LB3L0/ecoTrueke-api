@@ -45,7 +45,7 @@ namespace EcoTrueke.Domain.Constants
             public static Result UpdatedPerson => new()
             {
                 Code = Result.OK,
-                Type = "account_deleted",
+                Type = "updated",
                 Message = "Los datos se han actualizado correctamente."
             };
         }
@@ -92,6 +92,13 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.OK,
                 Type = "product_found",
                 Message = "Producto obtenido correctamente."
+            };
+
+            public static Result UpdatedProduct => new()
+            {
+                Code = Result.OK,
+                Type = "updated",
+                Message = "Los datos se han actualizado correctamente."
             };
         }
     }

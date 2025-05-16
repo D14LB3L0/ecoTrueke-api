@@ -43,7 +43,7 @@ namespace EcoTrueke.API.Controllers
 
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetProduct(string productId)
-            {
+        {
             try
             {
                 var result = await _productUseCase.GetProductExecute(productId);
@@ -69,6 +69,25 @@ namespace EcoTrueke.API.Controllers
                     return BadRequest(ModelState);
 
                 var result = await _productUseCase.RegisterProductExecute(LoggedUserId, request.Name, request.TypeTranscription, request.Category, request.Condition, request.Quantity, request.Description, request.ProductPicture);
+
+                return StatusCode(result.Code, new { message = result.Message });
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPut("{productId}")]
+        public async Task<IActionResult> EditProduct([FromForm] EditProductRequest request, string productId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _productUseCase.EditProductExecute(LoggedUserId, productId, request.Name, request.TypeTranscription, request.Category, request.Condition, request.Quantity, request.Description, request.ProductPicture, request.ProductPictureRemove);
 
                 return StatusCode(result.Code, new { message = result.Message });
 

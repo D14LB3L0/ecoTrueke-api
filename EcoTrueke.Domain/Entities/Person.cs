@@ -4,7 +4,7 @@
     {
         public string Id { get; set; }
 
-        public string name { get; set; }
+        public string Name { get; set; }
 
         public string PaternalSurname { get; set; }
 
@@ -32,7 +32,7 @@
         {
             return new()
             {
-                name = firstName,
+                Name = firstName,
                 PaternalSurname = paternalSurname,
                 MaternalSurname = maternalSurname,
                 CreatedAt = DateTime.UtcNow,
@@ -44,7 +44,7 @@
         public void EditPerson(string firstName, string paternalSurname, string maternalSurname, string phone,
             string address, string documentNumber, string documentType, string gender, string? profilePicture = null)
         {
-            name = firstName;
+            Name = firstName;
             PaternalSurname = paternalSurname;
             MaternalSurname = maternalSurname;
             Phone = phone;
@@ -60,7 +60,7 @@
             string address, string documentNumber, string documentType, string gender, string? profilePicture = null)
         {
             return
-                name == firstName &&
+                Name == firstName &&
                 PaternalSurname == paternalSurname &&
                 MaternalSurname == maternalSurname &&
                 Phone == phone &&

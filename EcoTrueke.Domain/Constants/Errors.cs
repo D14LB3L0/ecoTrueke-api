@@ -135,6 +135,18 @@ namespace EcoTrueke.Domain.Constants
                 Type = "not_found_product",
                 Message = "El producto no ha sido encontrado."
             };
+            public static Result Unchanged => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "unchanged",
+                Message = "No se realizaron cambios"
+            };
+            public static Result FailedUpdate => new()
+            {
+                Code = Result.NOT_FOUND,
+                Type = "failed_update",
+                Message = "No se pudo actualizar el producto."
+            };
         }
     }
 }

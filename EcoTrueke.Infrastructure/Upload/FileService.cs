@@ -14,7 +14,7 @@ namespace EcoTrueke.Infrastructure.Upload
             _basePath = configuration["FileStorage:UploadFolderPath"]; ;
         }
 
-        public async Task DeleteProfilePictureAsync(string relativePath)
+        public async Task DeletPictureAsync(string relativePath)
         {
             var fullPath = Path.Combine(_basePath, relativePath.Replace("/", "\\"));
 

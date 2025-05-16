@@ -6,6 +6,8 @@ namespace EcoTrueke.Domain.Interfaces.Repositories
     {
         Task RegisterProduct(Product product);
 
-        Task <Product?> GetProductById(string productId); 
+        Task <Product?> GetProductById(string productId);
+
+        Task UpdateProduct(Product product);
     }
 }

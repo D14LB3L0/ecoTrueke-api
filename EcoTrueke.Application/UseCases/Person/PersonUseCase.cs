@@ -42,7 +42,7 @@ namespace EcoTrueke.Application.UseCases.Person
 
             if (profilePictureRemove != null)
             {
-                await _fileService.DeleteProfilePictureAsync(person.ProfilePicture);
+                await _fileService.DeletPictureAsync(person.ProfilePicture);
                 profilePicturePath = "";
             }
 
@@ -66,7 +66,7 @@ namespace EcoTrueke.Application.UseCases.Person
             // mapping person
             var personMapping = new Domain.Entities.Person
             {
-                name = firstName,
+                Name = firstName,
                 PaternalSurname = paternalSurname,
                 MaternalSurname = maternalSurname,
                 Phone = phone,
