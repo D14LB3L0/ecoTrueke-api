@@ -6,7 +6,7 @@ namespace EcoTrueke.Domain.Interfaces.UseCases.Product
     public interface IProductUseCase
     {
         Task<Result> RegisterProductExecute(string userId, string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, IFormFile? productPicture = null);
-        Task<Result> GetPaginatedProductExecute(int page, int amountPage, string loggedUserId);
+        Task<Result> GetPaginatedProductExecute(int page, int amountPage, string loggedUserId, bool? myProducts = false);
         Task<Result> GetProductExecute(string productId);
         Task<Result> EditProductExecute(string userId, string productId, string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, IFormFile? productPicture = null, string? productPictureRemove = null);
         Task<Result> DeleteProductExecute(string productId);

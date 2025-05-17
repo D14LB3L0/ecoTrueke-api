@@ -9,5 +9,7 @@ namespace EcoTrueke.API.Requests.Product
 
         [Required]
         public int AmountPage { get; set; }
+
+        public bool MyProducts { get; set; }
     }
 }

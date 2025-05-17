@@ -86,9 +86,9 @@ namespace EcoTrueke.Application.UseCases.Product
 
         }
 
-        public async Task<Result> GetPaginatedProductExecute(int page, int amountPage, string loggedUserId)
+        public async Task<Result> GetPaginatedProductExecute(int page, int amountPage, string loggedUserId, bool? myProducts = false)
         {
-            var (products, totalPages) = await _productQuery.GetPaginatedProducts(page, amountPage, loggedUserId);
+            var (products, totalPages) = await _productQuery.GetPaginatedProducts(page, amountPage, loggedUserId, myProducts);
 
             var paginationResponse = new GetPaginatedProductResponse(products, totalPages);
 

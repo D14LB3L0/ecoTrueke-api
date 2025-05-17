@@ -17,15 +17,32 @@ namespace EcoTrueke.Infrastructure.Queries
             _products = database.GetCollection<MongoModels.Product>("Product");
         }
 
-        public async Task<(List<Product> Products, int totalPages)> GetPaginatedProducts(int page, int amountPage, string loggedUserId)
+        public async Task<(List<Product> Products, int totalPages)> GetPaginatedProducts(int page, int amountPage, string loggedUserId, bool? myProducts = false)
         {
-            // filter products differents in status pending
-            var filter = new BsonDocument("$and", new BsonArray
+
+            var filters = new List<BsonDocument>
             {
                 new BsonDocument("isDeleted", new BsonDocument("$ne", true)),
-                new BsonDocument("status", new BsonDocument("$eq", Types.ProductStatus.Pending)),
-                new BsonDocument("userId", new ObjectId(loggedUserId))
-            });
+            };
+
+            // filter products differents in status pendingx
+            if(myProducts == true)
+            {
+                filters.Add(new BsonDocument("status", new BsonDocument("$in", new BsonArray
+                {
+                    Types.ProductStatus.Pending,
+                    Types.ProductStatus.Active
+                })));
+                filters.Add(new BsonDocument("userId", new ObjectId(loggedUserId)));
+            }
+
+            if (myProducts == false)
+            {
+
+            }
+
+            // Final filter
+            var filter = new BsonDocument("$and", new BsonArray(filters));
 
             // total pages
             var totalRecords = await _products.CountDocumentsAsync(filter);
@@ -44,7 +61,8 @@ namespace EcoTrueke.Infrastructure.Queries
                     {"name", 1 },
                     {"quantity", 1 },
                     {"typeTranscription", 1 },
-                    {"condition", 1 }
+                    {"condition", 1 },
+                    {"status", 1 }
                 })
             };
 
