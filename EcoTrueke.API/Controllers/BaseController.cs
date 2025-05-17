@@ -20,22 +20,29 @@ namespace EcoTrueke.API.Controllers
                         : Request.Headers["Authorization"].ToString()[(schemaAuthentication.Length + 1)..];
             }
         }
-        protected string LoggedUserId
+        protected string? LoggedUserId
         {
             get
             {
-                // Read token
-                JwtSecurityTokenHandler handler = new();
-                JwtSecurityToken token = handler.ReadToken(Token) as JwtSecurityToken;
+                try
+                {
+                    var tokenString = Token;
+                    if (string.IsNullOrWhiteSpace(tokenString))
+                        return null;
 
-                // Get id
-                var claim = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
-                if (!string.IsNullOrWhiteSpace(claim))
-                    return (claim);
+                    var handler = new JwtSecurityTokenHandler();
+                    var token = handler.ReadToken(tokenString) as JwtSecurityToken;
+                    var claim = token?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-                return "";
+                    return string.IsNullOrWhiteSpace(claim) ? null : claim;
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
+
         protected string LoggedUserRole
         {
             get

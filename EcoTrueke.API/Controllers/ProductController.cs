@@ -27,7 +27,9 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _productUseCase.GetPaginatedProductExecute(request.Page, request.AmountPage, LoggedUserId, request.MyProducts, request.SearchTerm);
+                var userId = LoggedUserId ?? string.Empty;
+
+                var result = await _productUseCase.GetPaginatedProductExecute(request.Page, request.AmountPage, userId, request.MyProducts, request.SearchTerm);
 
                 var paginatedProductsResponse = JsonConvert.DeserializeObject<GetPaginatedProductResponse>(result.Data);
 
