@@ -2,6 +2,10 @@
 {
     public class GetProductResponse
     {
+        public string Id { get; set; }
+
+        public string UserId { get; set; }
+
         public string? ProductPicture { get; set; }
 
         public string Name { get; set; }

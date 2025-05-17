@@ -12,6 +12,10 @@
 
     public class ProductResponse
     {
+        public string Id { get; set; }
+
+        public string UserId { get; set; } 
+
         public string? ProductPicture { get; set; }
 
         public string Name { get; set; }
@@ -30,6 +34,8 @@
 
         public ProductResponse(Domain.Entities.Product product)
         {
+            Id = product.Id;
+            UserId = product.UserId;
             ProductPicture = product.ProductPicture;
             Name = product.Name;
             Description = product.Description;
