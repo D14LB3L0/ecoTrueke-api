@@ -71,7 +71,7 @@ namespace EcoTrueke.Domain.Entities
             Quantity = int.Parse(quantity);
             Description = description;
             ProductPicture = productPicture;
-            
+            UpdatedAt = DateTime.UtcNow;
         }
     }
 }

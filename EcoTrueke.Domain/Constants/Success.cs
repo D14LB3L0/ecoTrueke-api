@@ -94,6 +94,13 @@ namespace EcoTrueke.Domain.Constants
                 Message = "Producto obtenido correctamente."
             };
 
+            public static Result ProductDeleted => new()
+            {
+                Code = Result.OK,
+                Type = "product_deleted",
+                Message = "El producto se ha eliminado correctamente."
+            };
+
             public static Result UpdatedProduct => new()
             {
                 Code = Result.OK,

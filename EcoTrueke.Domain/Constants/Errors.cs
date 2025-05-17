@@ -147,6 +147,12 @@ namespace EcoTrueke.Domain.Constants
                 Type = "failed_update",
                 Message = "No se pudo actualizar el producto."
             };
+            public static Result FailedToDeleteProduct => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_delete",
+                Message = "No se pudo eliminar el producto."
+            };
         }
     }
 }

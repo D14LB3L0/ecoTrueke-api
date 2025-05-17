@@ -24,6 +24,20 @@ namespace EcoTrueke.Application.UseCases.Product
             _userRepository = userRepository;
         }
 
+        public async Task<Result> DeleteProductExecute(string productId)
+        {
+            try
+            {
+                await _productRepository.DeleteProduct(productId);
+
+                return new Result { Code = Success.Product.ProductDeleted.Code, Message = Success.Product.ProductDeleted.Message };
+            }
+            catch (Exception)
+            {
+                return Errors.Product.FailedToDeleteProduct;
+            }
+        }
+
         public async Task<Result> EditProductExecute(string userId, string productId, string name, string typeTranscription, IEnumerable<string> category, string condition, string quantity, string? description = null, IFormFile? productPicture = null, string? productPictureRemove = null)
         {
             // get user

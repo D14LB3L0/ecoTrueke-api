@@ -97,5 +97,21 @@ namespace EcoTrueke.API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> DeleteProduct(string productId)
+        {
+            try
+            {
+                var result = await _productUseCase.DeleteProductExecute(productId);
+
+                return StatusCode(result.Code, new { message = result.Message });
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }

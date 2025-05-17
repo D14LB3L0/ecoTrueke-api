@@ -9,5 +9,7 @@ namespace EcoTrueke.Domain.Interfaces.Repositories
         Task <Product?> GetProductById(string productId);
 
         Task UpdateProduct(Product product);
+
+        Task DeleteProduct(string productId);
     }
 }

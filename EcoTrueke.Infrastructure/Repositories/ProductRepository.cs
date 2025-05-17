@@ -13,6 +13,17 @@ namespace EcoTrueke.Infrastructure.Repositories
             _databaseRepository = databaseRepository;
         }
 
+        public async Task DeleteProduct(string productId)
+        {
+            await _databaseRepository.UpdateOneAsync<MongoModels.Product>(
+                p => p.Id == productId && p.IsDeleted != true,
+                p =>
+                {
+                    p.UpdatedAt = DateTime.UtcNow;
+                    p.IsDeleted = true;
+                });
+        }
+
         public async Task<Product?> GetProductById(string productId)
         {
             var mongoProduct = await _databaseRepository.FindOneAsync<MongoModels.Product>(
