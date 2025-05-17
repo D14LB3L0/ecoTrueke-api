@@ -17,7 +17,7 @@ namespace EcoTrueke.Infrastructure.Queries
             _products = database.GetCollection<MongoModels.Product>("Product");
         }
 
-        public async Task<(List<Product> Products, int totalPages)> GetPaginatedProducts(int page, int amountPage, string loggedUserId, bool? myProducts = false)
+        public async Task<(List<Product> Products, int totalPages)> GetPaginatedProducts(int page, int amountPage, string loggedUserId, bool? myProducts = false, string? searchTerm = null)
         {
 
             var filters = new List<BsonDocument>
@@ -38,7 +38,22 @@ namespace EcoTrueke.Infrastructure.Queries
 
             if (myProducts == false)
             {
+                if (!string.IsNullOrEmpty(loggedUserId))
+                {
+                    filters.Add(new BsonDocument("userId", new BsonDocument("$ne", new ObjectId(loggedUserId))));
+                }
 
+                filters.Add(new BsonDocument("status", new BsonDocument("$eq", Types.ProductStatus.Active)));
+            }
+
+            // search by name
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                filters.Add(new BsonDocument("name", new BsonDocument
+                {
+                    { "$regex", searchTerm },
+                    { "$options", "i" } 
+                }));
             }
 
             // Final filter

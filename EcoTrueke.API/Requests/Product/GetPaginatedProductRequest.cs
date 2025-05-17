@@ -11,5 +11,7 @@ namespace EcoTrueke.API.Requests.Product
         public int AmountPage { get; set; }
 
         public bool MyProducts { get; set; }
+
+        public string? SearchTerm { get; set; }
     }
 }

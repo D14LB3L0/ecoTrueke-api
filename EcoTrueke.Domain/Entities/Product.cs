@@ -39,7 +39,7 @@ namespace EcoTrueke.Domain.Entities
                 Name = name,
                 TypeTranscription = typeTranscription,
                 Category = category,
-                Status = Types.ProductStatus.Pending,
+                Status = Types.ProductStatus.Active,
                 Description = description,
                 Condition = condition,
                 Quantity = int.Parse(quantity),
