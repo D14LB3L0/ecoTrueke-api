@@ -22,6 +22,7 @@
         public int Quantity { get; set; }
         public string TypeTranscription { get; set; }
         public string Condition { get; set; }
+        public string Status { get; set; }
 
         public ProductsResponse(Domain.Entities.Product product)
         {
@@ -31,6 +32,7 @@
             Quantity = product.Quantity;
             TypeTranscription = product.TypeTranscription;
             Condition = product.Condition;
+            Status = product.Status;
         }
     }
 }

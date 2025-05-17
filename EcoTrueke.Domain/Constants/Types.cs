@@ -10,7 +10,8 @@
 
         public static class ProductStatus
         {
-            public const string Pending = "pending";
+            public const string Pending = "pending"; 
+            public const string Active = "active";
             public const string Traded = "traded";
             public const string Sold = "sold";
             public const string Donnated = "donnated";
