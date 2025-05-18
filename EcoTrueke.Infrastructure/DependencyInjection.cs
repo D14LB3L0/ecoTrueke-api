@@ -50,6 +50,7 @@ namespace EcoTrueke.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProposalRepository, ProposalRepository>();
 
             return services;
         }
