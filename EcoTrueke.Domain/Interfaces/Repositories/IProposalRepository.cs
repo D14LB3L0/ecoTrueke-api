@@ -4,6 +4,6 @@ namespace EcoTrueke.Domain.Interfaces.Repositories
 {
     public interface IProposalRepository
     {
-        Task<Proposal> CreateUser(Proposal proposal);
+        Task CreateExchangeProposal(Proposal proposal);
     }
 }

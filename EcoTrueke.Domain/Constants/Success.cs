@@ -108,5 +108,15 @@ namespace EcoTrueke.Domain.Constants
                 Message = "Los datos se han actualizado correctamente."
             };
         }
+
+        public static class Proposal
+        {
+            public static Result RegisterProposal => new()
+            {
+                Code = Result.OK,
+                Type = "product_found",
+                Message = "Propuesta enviada correctamente."
+            };
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace EcoTrueke.Domain.Entities
+﻿using static EcoTrueke.Domain.Constants.Types;
+
+namespace EcoTrueke.Domain.Entities
 {
     public class Proposal
     {
@@ -31,6 +33,7 @@
                 ProposalType = proposalType,
                 OfferedProductId = offeredProductId,
                 RequestedProductId = requestedProductId,
+                Status = ProposalStatus.Pending,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false

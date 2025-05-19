@@ -16,5 +16,10 @@
             public const string Sold = "sold";
             public const string Donnated = "donnated";
         }
+
+        public static class ProposalStatus
+        {
+            public const string Pending = "pending";
+        }
     }
 }

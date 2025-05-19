@@ -154,5 +154,15 @@ namespace EcoTrueke.Domain.Constants
                 Message = "No se pudo eliminar el producto."
             };
         }
+
+        public static class Proposal
+        {
+            public static Result FailedRegisterProposal => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_register",
+                Message = "No se pudo realizar la petición"
+            };
+        }
     }
 }

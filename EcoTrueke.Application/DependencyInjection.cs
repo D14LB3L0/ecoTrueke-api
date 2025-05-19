@@ -13,7 +13,7 @@ namespace EcoTrueke.Application
                 .addPersonUseCase()
                 .AddNotificationUseCase()
                 .AddProductUseCases()
-                .AddProductUseCases();
+                .AddProposalUseCases();
 
             return services;
         }
