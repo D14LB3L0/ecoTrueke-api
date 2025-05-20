@@ -36,7 +36,7 @@ namespace EcoTrueke.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("user")]
         public async Task<IActionResult> GetProposals()
         {
             try
