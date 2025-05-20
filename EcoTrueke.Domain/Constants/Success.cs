@@ -117,6 +117,12 @@ namespace EcoTrueke.Domain.Constants
                 Type = "product_found",
                 Message = "Propuesta enviada correctamente."
             };
+            public static Result GetProposal => new()
+            {
+                Code = Result.OK,
+                Type = "get_proposal",
+                Message = "Los datos se han obtenido correctamente."
+            };
         }
     }
 }

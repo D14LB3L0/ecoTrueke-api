@@ -1,4 +1,6 @@
-﻿namespace EcoTrueke.Infrastructure.Mappers
+﻿using EcoTrueke.Domain.Entities;
+
+namespace EcoTrueke.Infrastructure.Mappers
 {
     public static class ProposalMapper
     {
@@ -34,6 +36,11 @@
                 CreatedAt = mongoProposal.CreatedAt,
                 IsDeleted = mongoProposal.IsDeleted,
             };
+        }
+
+        public static List<Proposal> ToDomain(List<MongoModels.Proposal> mongoProposal)
+        {
+            return mongoProposal.Select(p => ToDomain(p)).ToList();
         }
     }
 }

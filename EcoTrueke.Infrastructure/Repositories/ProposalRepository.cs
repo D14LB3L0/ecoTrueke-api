@@ -21,5 +21,17 @@ namespace EcoTrueke.Infrastructure.Repositories
             // insert proposal
             await _databaseRepository.InsertOneAsync(mongoProposal);
         }
+
+        public async Task<List<Proposal>> GetProposalsByUserId(string userId)
+        {
+            var mongoProposal = await _databaseRepository.FindManyAsync<MongoModels.Proposal>(
+                p => p.ProposerId == userId && p.IsDeleted != true);
+
+            // if the user doesn't exists
+            if (mongoProposal == null)
+                return null;
+
+            return ProposalMapper.ToDomain(mongoProposal.ToList());
+        }
     }
 }

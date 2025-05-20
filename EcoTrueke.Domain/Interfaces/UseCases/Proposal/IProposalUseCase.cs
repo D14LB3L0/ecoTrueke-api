@@ -6,5 +6,7 @@ namespace EcoTrueke.Domain.Interfaces.UseCases.Proposal
     {
         Task<Result> RegisterExchangeProposalExecute(string proposerId, string ownerId, string proposalType, string offeredProductId, string requestedProductId);
 
+        Task<Result> GetProposalsExecute(string userId);
+
     }
 }
