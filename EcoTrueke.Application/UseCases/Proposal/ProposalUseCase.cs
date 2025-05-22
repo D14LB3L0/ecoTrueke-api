@@ -48,6 +48,9 @@ namespace EcoTrueke.Application.UseCases.Proposal
             {
                 await _proposalRepository.CreateExchangeProposal(exchangeProposal);
 
+                // send notification
+                var notification = Domain.Entities.Notification.ExchangeRequest(ownerId);
+
                 return Success.Proposal.RegisterProposal;
             }
             catch (Exception ex)

@@ -38,6 +38,22 @@ namespace EcoTrueke.Domain.Entities
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false,
             };
+        }       
+        
+        public static Notification ExchangeRequest(string userId)
+        {
+            return new Notification
+            {
+                UserId = userId,
+                Title = Notifications.ExchangeRequest.Title,
+                Message = Notifications.ExchangeRequest.Message, 
+                Type = Notifications.ExchangeRequest.Type,
+                IsRead = false,
+                Link = Notifications.ExchangeRequest.Link,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                IsDeleted = false,
+            };
         }
     }
 }
