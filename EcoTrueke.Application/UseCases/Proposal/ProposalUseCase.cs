@@ -11,26 +11,28 @@ namespace EcoTrueke.Application.UseCases.Proposal
     {
 
         private readonly IProposalRepository _proposalRepository;
+        private readonly INotificationRepository _notificationRepository;
 
-        public ProposalUseCase(IProposalRepository proposalRepository)
+        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository)
         {
             _proposalRepository = proposalRepository;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<Result> GetProposalsExecute(string userId)
         {
-           var getProposal = await _proposalRepository.GetProposalsByUserId(userId);
+            var getProposal = await _proposalRepository.GetProposalsByUserId(userId);
 
             var proposals = getProposal.Select(p => new Domain.Entities.Proposal
             {
                 Id = p.Id,
-                ProposerId= p.ProposerId,
-                OwnerId= p.OwnerId,
-                ProposalType= p.ProposalType,
-                OfferedProductId= p.OfferedProductId,
-                RequestedProductId= p.RequestedProductId,
-                Status= p.Status,
-                CreatedAt= p.CreatedAt
+                ProposerId = p.ProposerId,
+                OwnerId = p.OwnerId,
+                ProposalType = p.ProposalType,
+                OfferedProductId = p.OfferedProductId,
+                RequestedProductId = p.RequestedProductId,
+                Status = p.Status,
+                CreatedAt = p.CreatedAt
             }).ToList();
 
             var proposalResponse = new GetProposalsResponse(proposals);
@@ -49,7 +51,16 @@ namespace EcoTrueke.Application.UseCases.Proposal
                 await _proposalRepository.CreateExchangeProposal(exchangeProposal);
 
                 // send notification
-                var notification = Domain.Entities.Notification.ExchangeRequest(ownerId);
+                try
+                {
+                    var notification = Domain.Entities.Notification.ExchangeRequest(ownerId);
+                    await _notificationRepository.CreateNotification(notification);
+
+                }
+                catch(Exception)
+                {
+                    return Errors.Notification.FailedToCreateNotification;
+                }
 
                 return Success.Proposal.RegisterProposal;
             }
