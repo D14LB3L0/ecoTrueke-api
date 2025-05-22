@@ -1,4 +1,5 @@
-﻿using EcoTrueke.Domain.Entities;
+﻿using EcoTrueke.Domain.Constants;
+using EcoTrueke.Domain.Entities;
 using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Infrastructure.Mappers;
 
@@ -25,7 +26,7 @@ namespace EcoTrueke.Infrastructure.Repositories
         public async Task<List<Proposal>> GetProposalsByUserId(string userId)
         {
             var mongoProposal = await _databaseRepository.FindManyAsync<MongoModels.Proposal>(
-                p => p.ProposerId == userId && p.IsDeleted != true);
+                p => p.ProposerId == userId && p.IsDeleted != true && p.Status == Types.ProposalStatus.Pending);
 
             // if the user doesn't exists
             if (mongoProposal == null)

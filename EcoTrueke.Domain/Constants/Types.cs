@@ -20,6 +20,7 @@
         public static class ProposalStatus
         {
             public const string Pending = "pending";
+            public const string Rejected = "rejected";
         }
     }
 }
