@@ -36,18 +36,43 @@ namespace EcoTrueke.API.Controllers
             }
         }
 
-        [HttpGet("user")]
-        public async Task<IActionResult> GetProposals()
+        [HttpGet("requested")]
+        public async Task<IActionResult> GetRequestedProposals()
         {
             try
             {
-                var result = await _proposalUseCase.GetProposalsExecute(LoggedUserId);
+                var result = await _proposalUseCase.GetProposalsRequestedExecute(LoggedUserId);
 
                 if (result.Data != null)
                 {
-                    var proposalResponse = JsonConvert.DeserializeObject<GetProposalsResponse>(result.Data);
+                    var proposalRequestedResponse = JsonConvert.DeserializeObject<GetProposalsRequestedResponse>(result.Data);
 
-                    var apiResponse = new ApiResponse<GetProposalsResponse>(proposalResponse, result.Message);
+                    var apiResponse = new ApiResponse<GetProposalsRequestedResponse>(proposalRequestedResponse, result.Message);
+
+                    return StatusCode(result.Code, apiResponse);
+                }
+
+                return StatusCode(result.Code, new { message = result.Message });
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProposals([FromQuery] GetProposalsRequest request)
+        {
+            try
+            {
+                var result = await _proposalUseCase.GetProposalsExecute(request.Page, request.AmountPage,LoggedUserId);
+
+                if (result.Data != null)
+                {
+                    var proposalResponse = JsonConvert.DeserializeObject<GetProposalResponse>(result.Data);
+
+                    var apiResponse = new ApiResponse<GetProposalResponse>(proposalResponse, result.Message);
 
                     return StatusCode(result.Code, apiResponse);
                 }

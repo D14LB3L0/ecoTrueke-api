@@ -23,7 +23,8 @@ namespace EcoTrueke.Domain.Entities
         public DateTime CreatedAt { get; set; }
 
         public bool IsDeleted { get; set; }
-    
+
+
         public static Proposal Create(string proposerId, string ownerId, string proposalType, string offeredProductId, string requestedProductId)
         {
             return new()

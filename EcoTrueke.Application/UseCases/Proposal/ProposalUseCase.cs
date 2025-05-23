@@ -1,5 +1,5 @@
-﻿using EcoTrueke.Application.UseCases.Auth;
-using EcoTrueke.Domain.Constants;
+﻿using EcoTrueke.Domain.Constants;
+using EcoTrueke.Domain.Interfaces.Queries;
 using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Domain.Interfaces.UseCases.Proposal;
 using EcoTrueke.Services.API;
@@ -11,15 +11,30 @@ namespace EcoTrueke.Application.UseCases.Proposal
     {
 
         private readonly IProposalRepository _proposalRepository;
+        private readonly IProposalQuery _proposalQuery;
         private readonly INotificationRepository _notificationRepository;
 
-        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository)
+        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository, IProposalQuery proposalQuery)
         {
             _proposalRepository = proposalRepository;
             _notificationRepository = notificationRepository;
+            _proposalQuery = proposalQuery;
         }
 
-        public async Task<Result> GetProposalsExecute(string userId)
+        public Task<Result> GetProposalAcceptedExecute(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Result> GetProposalsExecute(int page, int amountPage, string loggedUserId)
+        {
+            var response = await _proposalQuery.GetProposals(page, amountPage, loggedUserId);
+
+            // login success
+            return new Result { Code = Success.User.LoggedIn.Code, Data = JsonConvert.SerializeObject(response), Message = Success.User.LoggedIn.Message };
+        }
+
+        public async Task<Result> GetProposalsRequestedExecute(string userId)
         {
             var getProposal = await _proposalRepository.GetProposalsByUserId(userId);
 
@@ -35,7 +50,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
                 CreatedAt = p.CreatedAt
             }).ToList();
 
-            var proposalResponse = new GetProposalsResponse(proposals);
+            var proposalResponse = new GetProposalsRequestedResponse(proposals);
 
             return new Result { Code = Success.Proposal.GetProposal.Code, Data = JsonConvert.SerializeObject(proposalResponse), Message = Success.Proposal.GetProposal.Message };
 
@@ -57,7 +72,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
                     await _notificationRepository.CreateNotification(notification);
 
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     return Errors.Notification.FailedToCreateNotification;
                 }

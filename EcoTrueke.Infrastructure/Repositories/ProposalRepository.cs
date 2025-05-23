@@ -33,6 +33,17 @@ namespace EcoTrueke.Infrastructure.Repositories
                 return null;
 
             return ProposalMapper.ToDomain(mongoProposal.ToList());
+        }  
+        public async Task<List<Proposal>> GetProposalsByOwnerId(string userId)
+        {
+            var mongoProposal = await _databaseRepository.FindManyAsync<MongoModels.Proposal>(
+                p => p.OwnerId == userId && p.IsDeleted != true && p.Status == Types.ProposalStatus.Pending);
+
+            // if the user doesn't exists
+            if (mongoProposal == null)
+                return null;
+
+            return ProposalMapper.ToDomain(mongoProposal.ToList());
         }
     }
 }

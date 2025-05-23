@@ -7,5 +7,7 @@ namespace EcoTrueke.Domain.Interfaces.Repositories
         Task CreateExchangeProposal(Proposal proposal);
 
         Task<List<Proposal>> GetProposalsByUserId(string userId);
+
+        Task<List<Proposal>> GetProposalsByOwnerId(string userId);
     }
 }

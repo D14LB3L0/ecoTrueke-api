@@ -1,20 +1,20 @@
 ﻿namespace EcoTrueke.API.Responses.Proposal
 {
-    public class GetProposalsResponse
+    public class GetProposalsRequestedResponse
     {
-        public List<ProposalResponse> Proposals { get; set; }
+        public List<ProposalRequestedResponse> Proposals { get; set; }
 
-        public GetProposalsResponse(List<Domain.Entities.Proposal> proposals)
+        public GetProposalsRequestedResponse(List<Domain.Entities.Proposal> proposals)
         {
             Proposals = new();
             foreach (var proposal in proposals)
             {
-                Proposals.Add(new ProposalResponse(proposal));
+                Proposals.Add(new ProposalRequestedResponse(proposal));
             }
         }
     }
 
-    public class ProposalResponse
+    public class ProposalRequestedResponse
     {
         public string Id { get; set; }
 
@@ -32,7 +32,7 @@
 
         public DateTime CreatedAt { get; set; }
 
-        public ProposalResponse(Domain.Entities.Proposal proposal)
+        public ProposalRequestedResponse(Domain.Entities.Proposal proposal)
         {
             Id = proposal.Id;
             ProposerId = proposal.ProposerId;

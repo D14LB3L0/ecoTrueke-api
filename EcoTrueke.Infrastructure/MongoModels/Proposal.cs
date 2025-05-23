@@ -40,5 +40,17 @@ namespace EcoTrueke.Infrastructure.MongoModels
 
         [BsonElement("isDeleted")]
         public bool IsDeleted { get; set; }
+
+        [BsonIgnoreIfNull]
+        [BsonElement("proposerUser")]
+        public User ProposerUser { get; set; }
+        
+        [BsonIgnoreIfNull]
+        [BsonElement("offeredProduct")]
+        public Product OfferedProduct { get; set; } 
+        
+        [BsonIgnoreIfNull]
+        [BsonElement("requestedProduct")]
+        public Product RequestedProduct { get; set; }
     }
 }

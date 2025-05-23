@@ -59,6 +59,7 @@ namespace EcoTrueke.Infrastructure
         {
             services.AddScoped<INotificationQuery, NotificationQuery>();
             services.AddScoped<IProductQuery, ProductQuery>();
+            services.AddScoped<IProposalQuery, ProposalQuery>();
 
             return services;
         }
