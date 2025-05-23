@@ -28,10 +28,12 @@ namespace EcoTrueke.Application.UseCases.Proposal
 
         public async Task<Result> GetProposalsExecute(int page, int amountPage, string loggedUserId)
         {
-            var response = await _proposalQuery.GetProposals(page, amountPage, loggedUserId);
+            var (proposals, totalPages) = await _proposalQuery.GetProposals(page, amountPage, loggedUserId);
+
+            var paginationResponse = new GetPaginatedProposalResponse(proposals, totalPages);
 
             // login success
-            return new Result { Code = Success.User.LoggedIn.Code, Data = JsonConvert.SerializeObject(response), Message = Success.User.LoggedIn.Message };
+            return new Result { Code = Success.User.LoggedIn.Code, Data = JsonConvert.SerializeObject(paginationResponse), Message = Success.User.LoggedIn.Message };
         }
 
         public async Task<Result> GetProposalsRequestedExecute(string userId)

@@ -66,13 +66,15 @@ namespace EcoTrueke.API.Controllers
         {
             try
             {
-                var result = await _proposalUseCase.GetProposalsExecute(request.Page, request.AmountPage,LoggedUserId);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
+                var result = await _proposalUseCase.GetProposalsExecute(request.Page, request.AmountPage,LoggedUserId);
                 if (result.Data != null)
                 {
-                    var proposalResponse = JsonConvert.DeserializeObject<GetProposalResponse>(result.Data);
+                    var proposalResponse = JsonConvert.DeserializeObject<GetPaginatedProposalResponse>(result.Data);
 
-                    var apiResponse = new ApiResponse<GetProposalResponse>(proposalResponse, result.Message);
+                    var apiResponse = new ApiResponse<GetPaginatedProposalResponse>(proposalResponse, result.Message);
 
                     return StatusCode(result.Code, apiResponse);
                 }
@@ -80,9 +82,9 @@ namespace EcoTrueke.API.Controllers
                 return StatusCode(result.Code, new { message = result.Message });
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500);
+                return BadRequest(ex);
             }
         }
     }

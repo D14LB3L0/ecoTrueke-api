@@ -1,4 +1,4 @@
-﻿namespace EcoTrueke.API.Responses.Proposal
+﻿namespace EcoTrueke.Domain.DTOs
 {
     public class GetPaginatedProposalResponse
     {

@@ -1,5 +1,5 @@
-﻿using EcoTrueke.Domain.Interfaces.Queries;
-using EcoTrueke.Services.API;
+﻿using EcoTrueke.Domain.DTOs;
+using EcoTrueke.Domain.Interfaces.Queries;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -7,33 +7,30 @@ namespace EcoTrueke.Infrastructure.Queries
 {
     public class ProposalQuery : IProposalQuery
     {
-        private readonly IMongoDatabase _database;
         private readonly IMongoCollection<MongoModels.Proposal> _proposal;
         private readonly IMongoCollection<MongoModels.User> _user;
         private readonly IMongoCollection<MongoModels.Product> _product;
 
         public ProposalQuery(IMongoDatabase database)
         {
-            _database = database;
             _proposal = database.GetCollection<MongoModels.Proposal>("Proposal");
             _user = database.GetCollection<MongoModels.User>("User");
             _product = database.GetCollection<MongoModels.Product>("Product");
         }
-        public async Task<(List<object> Proposals, int totalPages)> GetProposals(int page, int amountPage, string loggedUserId)
+        public async Task<(List<GetProposalResponse> proposals, int totalPages)> GetProposals(int page, int amountPage, string loggedUserId)
         {
             var filter = new BsonDocument("$and", new BsonArray
             {
                 new BsonDocument("isDeleted", new BsonDocument("$ne", true)),
-                new BsonDocument("userId", new ObjectId(loggedUserId))
+                new BsonDocument("ownerId", new ObjectId(loggedUserId))
             });
 
             // pipeline 
-            var objectId = new ObjectId(loggedUserId);
 
             var pipeline = new[]
             {
                new BsonDocument("$match", filter),
-               new BsonDocument("&lookup", new BsonDocument
+               new BsonDocument("$lookup", new BsonDocument
                {
                    {"from", "User" },
                    {"localField", "proposerId" },
@@ -42,6 +39,16 @@ namespace EcoTrueke.Infrastructure.Queries
                }),
 
                 new BsonDocument("$unwind", "$proposerUser"),
+
+                new BsonDocument("$lookup", new BsonDocument
+                {
+                    { "from", "Person" },
+                    { "localField", "proposerUser.personId" },
+                    { "foreignField", "_id" },
+                    { "as", "proposerPerson" }
+                }),
+
+                new BsonDocument("$unwind", "$proposerPerson"),
 
                 new BsonDocument("$lookup", new BsonDocument
                 {
@@ -61,7 +68,7 @@ namespace EcoTrueke.Infrastructure.Queries
                     {"as", "requestedProduct"}
                 }),
 
-                new BsonDocument("$unwind", "requestedProduct"),
+                new BsonDocument("$unwind", "$requestedProduct"),
 
                 new BsonDocument("$facet", new BsonDocument
                 {
@@ -83,14 +90,14 @@ namespace EcoTrueke.Infrastructure.Queries
 
             if (result == null || !result.Contains("data"))
             {
-                return (new List<object>(), 0);
+                return (new List<GetProposalResponse>(), 0);
             }
 
-            var results = new List<object>();
+            var results = new List<GetProposalResponse>();
 
             foreach (var d in result["data"].AsBsonArray)
             {
-                var dto = new
+                var dto = new GetProposalResponse
                 {
                     Id = d["_id"].AsObjectId.ToString(),
                     ProposerId = d["proposerId"].AsObjectId.ToString(),
@@ -99,17 +106,21 @@ namespace EcoTrueke.Infrastructure.Queries
                     Status = d["status"].AsString,
                     CreatedAt = d["createdAt"].ToUniversalTime(),
 
-                    ProposerUser = new
+                    ProposerUser = new UserDto
                     {
                         Id = d["proposerUser"]["_id"].AsObjectId.ToString(),
-                        Name = d["proposerUser"]["name"].AsString
                     },
-                    OfferedProduct = new
+                    ProposerPerson = new PersonDto
+                    {
+                        Id = d["proposerPerson"]["_id"].AsObjectId.ToString(),
+                        Name = d["proposerPerson"]["name"].AsString
+                    },
+                    OfferedProduct = new ProductDto
                     {
                         Id = d["offeredProduct"]["_id"].AsObjectId.ToString(),
                         Name = d["offeredProduct"]["name"].AsString
                     },
-                    RequestedProduct = new
+                    RequestedProduct = new ProductDto
                     {
                         Id = d["requestedProduct"]["_id"].AsObjectId.ToString(),
                         Name = d["requestedProduct"]["name"].AsString
@@ -118,7 +129,7 @@ namespace EcoTrueke.Infrastructure.Queries
 
                 results.Add(dto);
             }
-            
+
             // total pages
             var total = result["count"].AsBsonArray.FirstOrDefault()?["total"].ToInt32() ?? 0;
             var totalPages = (int)Math.Ceiling((double)total / amountPage);
