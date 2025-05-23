@@ -118,12 +118,14 @@ namespace EcoTrueke.Infrastructure.Queries
                     OfferedProduct = new ProductDto
                     {
                         Id = d["offeredProduct"]["_id"].AsObjectId.ToString(),
-                        Name = d["offeredProduct"]["name"].AsString
+                        Name = d["offeredProduct"]["name"].AsString,
+                        ProductPicture = d["offeredProduct"]["productPicture"].AsString
                     },
                     RequestedProduct = new ProductDto
                     {
                         Id = d["requestedProduct"]["_id"].AsObjectId.ToString(),
-                        Name = d["requestedProduct"]["name"].AsString
+                        Name = d["requestedProduct"]["name"].AsString,
+                        ProductPicture = d["requestedProduct"]["productPicture"].AsString
                     }
                 };
 

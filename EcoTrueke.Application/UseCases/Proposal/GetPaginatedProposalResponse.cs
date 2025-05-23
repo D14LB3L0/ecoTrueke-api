@@ -51,13 +51,16 @@
                 OfferedProduct = new ProductDto
                 {
                     Id = proposal.OfferedProduct.Id,
-                    Name = proposal.OfferedProduct.Name
+                    Name = proposal.OfferedProduct.Name,
+                    ProductPicture = proposal.OfferedProduct.ProductPicture
                 };
 
                 RequestedProduct = new ProductDto
                 {
                     Id = proposal.RequestedProduct.Id,
-                    Name = proposal.RequestedProduct.Name
+                    Name = proposal.RequestedProduct.Name,
+                    ProductPicture = proposal.RequestedProduct.ProductPicture
+
                 };
             }
         }
@@ -77,6 +80,7 @@
         {
             public string Id { get; set; }
             public string Name { get; set; }
+            public string ProductPicture { get; set; }
         }
     }
 }
