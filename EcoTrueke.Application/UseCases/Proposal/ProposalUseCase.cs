@@ -12,13 +12,17 @@ namespace EcoTrueke.Application.UseCases.Proposal
 
         private readonly IProposalRepository _proposalRepository;
         private readonly IProposalQuery _proposalQuery;
+        private readonly IUserRepository _userRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly INotificationRepository _notificationRepository;
 
-        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository, IProposalQuery proposalQuery)
+        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository, IProposalQuery proposalQuery, IUserRepository userRepository, IPersonRepository personRepository)
         {
             _proposalRepository = proposalRepository;
             _notificationRepository = notificationRepository;
             _proposalQuery = proposalQuery;
+            _userRepository = userRepository;
+            _personRepository = personRepository;
         }
 
         public Task<Result> GetProposalAcceptedExecute(string userId)
@@ -81,9 +85,80 @@ namespace EcoTrueke.Application.UseCases.Proposal
 
                 return Success.Proposal.RegisterProposal;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Errors.Proposal.FailedRegisterProposal;
+            }
+        }
+
+        public async Task<Result> RejectOrAcceptProposalExecute(string proposalId, string action)
+        {
+            try
+            {
+                try
+                {
+                    await _proposalRepository.RejectOrAcceptProposal(proposalId, action);
+                }
+                catch
+                {
+                    return Errors.Proposal.FailedRespondProposal;
+                }
+
+                if (action == Types.ProposalStatus.Accepted)
+                {
+                    try
+                    {
+                        var proposal = await _proposalRepository.GetProposalId(proposalId);
+
+                        try
+                        {
+                            var ownerUser = await _userRepository.GetUserById(proposal.OwnerId);
+                            var proposerUser = await _userRepository.GetUserById(proposal.ProposerId);
+
+                            try
+                            {
+                                var ownerPerson = await _userRepository.GetUserById(ownerUser.PersonId);
+                                var proposerPerson = await _userRepository.GetUserById(proposerUser.PersonId);
+                            }
+                            catch
+                            {
+                                return Errors.Person.NotFoundPerson;
+                            }
+
+                            // create notifications
+                            var notificationOwner = Domain.Entities.Notification.ProposalAccepted(ownerUser.Id);
+                            var notificationProposer = Domain.Entities.Notification.ProposerUserRequestAccepted(proposerUser.Id);
+
+                            try
+                            {
+                                await _notificationRepository.CreateNotification(notificationOwner);
+                                await _notificationRepository.CreateNotification(notificationProposer);
+                            }
+                            catch
+                            {
+                                return Errors.Notification.FailedToCreateNotification;
+                            }
+                               
+                            // create mails
+
+                        }
+                        catch
+                        {
+                            return Errors.User.NotFoundUser;
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                        return Errors.Proposal.FailedGetProposal;
+                    }
+                }
+
+                return Success.Proposal.AcceptProposal;
+            }
+            catch (Exception)
+            {
+                return Errors.Proposal.FailedRespondProposal;
             }
         }
     }

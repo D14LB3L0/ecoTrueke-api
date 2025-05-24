@@ -33,7 +33,7 @@ namespace EcoTrueke.Infrastructure.Repositories
                 return null;
 
             return ProposalMapper.ToDomain(mongoProposal.ToList());
-        }  
+        }
         public async Task<List<Proposal>> GetProposalsByOwnerId(string userId)
         {
             var mongoProposal = await _databaseRepository.FindManyAsync<MongoModels.Proposal>(
@@ -44,6 +44,34 @@ namespace EcoTrueke.Infrastructure.Repositories
                 return null;
 
             return ProposalMapper.ToDomain(mongoProposal.ToList());
+        }
+
+        public async Task RejectOrAcceptProposal(string proposalId, string action)
+        {
+            // proposal
+            await _databaseRepository.UpdateOneAsync<MongoModels.Proposal>(
+            p => p.Id == proposalId && p.IsDeleted != true,
+            p =>
+            {
+                if (action == Types.ProposalStatus.Rejected)
+                    p.Status = action;
+                else
+                    p.Status = action;
+                p.UpdatedAt = DateTime.UtcNow;
+            });
+        }
+
+        public async Task<Proposal> GetProposalId(string proposalId)
+        {
+            // get mongo proposer
+            var mongoProposer = await _databaseRepository.FindOneAsync<MongoModels.Proposal>(
+                p => p.Id == proposalId && p.IsDeleted != true);
+
+            if (mongoProposer == null)
+                return null;
+
+            // map data to user
+            return ProposalMapper.ToDomain(mongoProposer);
         }
     }
 }

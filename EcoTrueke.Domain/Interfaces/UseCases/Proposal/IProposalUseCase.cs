@@ -11,5 +11,7 @@ namespace EcoTrueke.Domain.Interfaces.UseCases.Proposal
         Task<Result> GetProposalAcceptedExecute(string userId);
 
         Task<Result> GetProposalsExecute(int page, int amountPage, string loggedUserId);
+
+        Task<Result> RejectOrAcceptProposalExecute(string proposalId, string action);
     }
 }

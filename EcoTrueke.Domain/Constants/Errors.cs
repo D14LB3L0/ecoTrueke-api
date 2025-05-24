@@ -162,6 +162,18 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "failed_register",
                 Message = "No se pudo realizar la petición"
+            }; 
+            public static Result FailedGetProposal => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_get",
+                Message = "No se pudo obtener la propuesta"
+            };    
+            public static Result FailedRespondProposal => new()
+            {
+                Code = Result.UNPROCESSABLE_ENTITY,
+                Type = "failed_respónd",
+                Message = "No se pudo responder la propuesta"
             };
         }
     }

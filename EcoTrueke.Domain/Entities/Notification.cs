@@ -55,5 +55,36 @@ namespace EcoTrueke.Domain.Entities
                 IsDeleted = false,
             };
         }
+
+        public static Notification ProposalAccepted(string ownerUserId)
+        {
+            return new Notification
+            {
+                UserId = ownerUserId,
+                Title = Notifications.OwnerUserAcceptedProposal.Title,
+                Message = Notifications.OwnerUserAcceptedProposal.Message,
+                Type = Notifications.OwnerUserAcceptedProposal.Type,
+                IsRead = false,
+                Link = Notifications.OwnerUserAcceptedProposal.Link,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                IsDeleted = false,
+            };
+        } 
+        public static Notification ProposerUserRequestAccepted(string proposerUserId)
+        {
+            return new Notification
+            {
+                UserId = proposerUserId,
+                Title = Notifications.ProposerUserProposal.Title,
+                Message = Notifications.ProposerUserProposal.Message,
+                Type = Notifications.ProposerUserProposal.Type,
+                IsRead = false,
+                Link = Notifications.ProposerUserProposal.Link,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                IsDeleted = false,
+            };
+        }
     }
 }

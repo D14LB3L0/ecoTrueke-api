@@ -16,5 +16,21 @@
             public const string Type = "info";
             public const string Link = "/dashboard/my-products/requests";
         }
+        public static class OwnerUserAcceptedProposal
+        {
+            public const string Title = "Propuesta de intercambio";
+            public const string Message = "Has aceptado la propuesta de intercambio. Revisa tu correo electrónico y comunícate con el otro usuario.";
+            public const string Type = "info";
+            public const string Link = "";
+        }
+
+        public static class ProposerUserProposal
+        {
+            public const string Title = "Propuesta de intercambio";
+            public const string Message = "Tu propuesta de intercambio ha sido aceptada. Revisa tu correo electrónico y comunícate con el otro usuario.";
+            public const string Type = "info";
+            public const string Link = "";
+        }
+
     }
 }

@@ -21,6 +21,7 @@
         {
             public const string Pending = "pending";
             public const string Rejected = "rejected";
+            public const string Accepted = "accepted";
         }
     }
 }
