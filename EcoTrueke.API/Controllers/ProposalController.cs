@@ -82,9 +82,27 @@ namespace EcoTrueke.API.Controllers
                 return StatusCode(result.Code, new { message = result.Message });
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return BadRequest(ex);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost("accept-reject")]
+        public async Task<IActionResult> RejectOrAcceptProposal([FromBody] RejectOrAcceptProposalRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _proposalUseCase.RejectOrAcceptProposalExecute(request.ProposalId, request.Action);
+
+                return StatusCode(result.Code, new { message = result.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
             }
         }
     }

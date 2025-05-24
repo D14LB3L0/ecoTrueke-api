@@ -162,7 +162,6 @@ namespace EcoTrueke.Application.UseCases.Proposal
                         return Errors.Proposal.FailedGetProposal;
                     }
                 }
-
                 return Success.Proposal.AcceptProposal;
             }
             catch (Exception)
