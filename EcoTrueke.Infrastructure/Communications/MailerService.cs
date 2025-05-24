@@ -64,22 +64,22 @@ namespace EcoTrueke.Infrastructure.Communications
             return new Result { Code = Result.OK };
         }
 
-        public async Task<Result> SendMailExchangeAcceptedByOwner(User user, Person person)
+        public async Task<Result> SendMailExchangeAcceptedByOwner(User ownerUser, Person ownerPerson, Person proposalPerson)
         {
             var content = File.ReadAllText(Path.Combine(_environment.ContentRootPath, MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_OWNER))
-                .Replace("{telefono}", person.Phone);
+                .Replace("{telefono}", proposalPerson.Phone);
 
-            await SendSupportCallMail(user.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {person.Name} {person.PaternalSurname} {person.MaternalSurname}", content);
+            await SendSupportCallMail(ownerUser.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {proposalPerson.Name}   {proposalPerson.PaternalSurname} {ownerPerson.MaternalSurname}", content);
 
             return new Result { Code = Result.OK };
         }
 
-        public async Task<Result> SendMailExchangeAcceptedToProposer(User user, Person person)
+        public async Task<Result> SendMailExchangeAcceptedToProposer(User proposalUser, Person proposalPerson, Person ownerPerson)
         {
             var content = File.ReadAllText(Path.Combine(_environment.ContentRootPath, MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_PROPOSER))
-                .Replace("{telefono}", person.Phone);
+                .Replace("{telefono}", ownerPerson.Phone);
 
-            await SendSupportCallMail(user.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {person.Name} {person.PaternalSurname} {person.MaternalSurname}", content);
+            await SendSupportCallMail(proposalUser.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {proposalPerson.Name} {proposalPerson.PaternalSurname} {proposalPerson.MaternalSurname}", content);
 
             return new Result { Code = Result.OK };
         }

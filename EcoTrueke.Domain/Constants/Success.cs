@@ -122,6 +122,12 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.OK,
                 Type = "accept_proposal",
                 Message = "Se aceptó la propuesta correctamente."
+            }; 
+            public static Result RejectProposal => new()
+            {
+                Code = Result.OK,
+                Type = "reject_proposal",
+                Message = "Se rechazó la propuesta correctamente."
             };
             public static Result GetProposal => new()
             {

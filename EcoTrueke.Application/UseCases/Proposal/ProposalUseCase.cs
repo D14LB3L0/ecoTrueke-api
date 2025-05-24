@@ -101,6 +101,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
                 try
                 {
                     await _proposalRepository.RejectOrAcceptProposal(proposalId, action);
+
                 }
                 catch
                 {
@@ -139,8 +140,8 @@ namespace EcoTrueke.Application.UseCases.Proposal
                                 try
                                 {
                                     // create mails
-                                    await _mailerService.SendMailExchangeAcceptedByOwner(ownerUser, ownerPerson);
-                                    await _mailerService.SendMailExchangeAcceptedByOwner(proposerUser, proposerPerson);
+                                    await _mailerService.SendMailExchangeAcceptedByOwner(ownerUser, ownerPerson, proposerPerson);
+                                    await _mailerService.SendMailExchangeAcceptedByOwner(proposerUser, proposerPerson, ownerPerson);
                                 }
                                 catch (Exception)
                                 {
@@ -162,7 +163,11 @@ namespace EcoTrueke.Application.UseCases.Proposal
                         return Errors.Proposal.FailedGetProposal;
                     }
                 }
-                return Success.Proposal.AcceptProposal;
+                else
+                {
+                    return Success.Proposal.RejectProposal;
+                }
+                    return Success.Proposal.AcceptProposal;
             }
             catch (Exception)
             {

@@ -1,4 +1,5 @@
-﻿using EcoTrueke.Domain.DTOs;
+﻿using EcoTrueke.Domain.Constants;
+using EcoTrueke.Domain.DTOs;
 using EcoTrueke.Domain.Interfaces.Queries;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -22,7 +23,8 @@ namespace EcoTrueke.Infrastructure.Queries
             var filter = new BsonDocument("$and", new BsonArray
             {
                 new BsonDocument("isDeleted", new BsonDocument("$ne", true)),
-                new BsonDocument("ownerId", new ObjectId(loggedUserId))
+                new BsonDocument("ownerId", new ObjectId(loggedUserId)),
+                new BsonDocument("status", Types.ProposalStatus.Pending)
             });
 
             // pipeline 

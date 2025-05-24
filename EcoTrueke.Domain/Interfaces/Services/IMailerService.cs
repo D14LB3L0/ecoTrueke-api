@@ -7,7 +7,7 @@ namespace EcoTrueke.Domain.Interfaces.Services
     {
         Task<Result> SendMailResetPassword(User user, Person person, string newPassword);
 
-        Task<Result> SendMailExchangeAcceptedByOwner(User user, Person person);
-        Task<Result> SendMailExchangeAcceptedToProposer(User user, Person person);
+        Task<Result> SendMailExchangeAcceptedByOwner(User ownerUser, Person ownerPerson, Person proposalPerson);
+        Task<Result> SendMailExchangeAcceptedToProposer(User proposalUser, Person proposalPerson, Person ownerPerson);
     }
 }
