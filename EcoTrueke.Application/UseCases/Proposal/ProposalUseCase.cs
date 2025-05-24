@@ -1,6 +1,7 @@
 ﻿using EcoTrueke.Domain.Constants;
 using EcoTrueke.Domain.Interfaces.Queries;
 using EcoTrueke.Domain.Interfaces.Repositories;
+using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Domain.Interfaces.UseCases.Proposal;
 using EcoTrueke.Services.API;
 using Newtonsoft.Json;
@@ -15,14 +16,16 @@ namespace EcoTrueke.Application.UseCases.Proposal
         private readonly IUserRepository _userRepository;
         private readonly IPersonRepository _personRepository;
         private readonly INotificationRepository _notificationRepository;
+        private readonly IMailerService _mailerService;
 
-        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository, IProposalQuery proposalQuery, IUserRepository userRepository, IPersonRepository personRepository)
+        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository, IProposalQuery proposalQuery, IUserRepository userRepository, IPersonRepository personRepository, IMailerService mailer)
         {
             _proposalRepository = proposalRepository;
             _notificationRepository = notificationRepository;
             _proposalQuery = proposalQuery;
             _userRepository = userRepository;
             _personRepository = personRepository;
+            _mailerService = mailer;
         }
 
         public Task<Result> GetProposalAcceptedExecute(string userId)
@@ -117,36 +120,42 @@ namespace EcoTrueke.Application.UseCases.Proposal
 
                             try
                             {
-                                var ownerPerson = await _userRepository.GetUserById(ownerUser.PersonId);
-                                var proposerPerson = await _userRepository.GetUserById(proposerUser.PersonId);
+                                var ownerPerson = await _personRepository.GetPersonById(ownerUser.PersonId);
+                                var proposerPerson = await _personRepository.GetPersonById(proposerUser.PersonId);
+
+                                // create notifications
+                                var notificationOwner = Domain.Entities.Notification.ProposalAccepted(ownerUser.Id);
+                                var notificationProposer = Domain.Entities.Notification.ProposerUserRequestAccepted(proposerUser.Id);
+
+                                try
+                                {
+                                    await _notificationRepository.CreateNotification(notificationOwner);
+                                    await _notificationRepository.CreateNotification(notificationProposer);
+                                }
+                                catch (Exception)
+                                {
+                                    return Errors.Notification.FailedToCreateNotification;
+                                }
+                                try
+                                {
+                                    // create mails
+                                    await _mailerService.SendMailExchangeAcceptedByOwner(ownerUser, ownerPerson);
+                                    await _mailerService.SendMailExchangeAcceptedByOwner(proposerUser, proposerPerson);
+                                }
+                                catch (Exception)
+                                {
+                                    return Errors.Mail.FailedToSendEmail;
+                                }
                             }
-                            catch
+                            catch (Exception)
                             {
                                 return Errors.Person.NotFoundPerson;
                             }
-
-                            // create notifications
-                            var notificationOwner = Domain.Entities.Notification.ProposalAccepted(ownerUser.Id);
-                            var notificationProposer = Domain.Entities.Notification.ProposerUserRequestAccepted(proposerUser.Id);
-
-                            try
-                            {
-                                await _notificationRepository.CreateNotification(notificationOwner);
-                                await _notificationRepository.CreateNotification(notificationProposer);
-                            }
-                            catch
-                            {
-                                return Errors.Notification.FailedToCreateNotification;
-                            }
-                               
-                            // create mails
-
                         }
                         catch
                         {
                             return Errors.User.NotFoundUser;
                         }
-
                     }
                     catch (Exception)
                     {

@@ -16,6 +16,8 @@ namespace EcoTrueke.Infrastructure.Communications
 
         private const string MAIL_ECOTRUEKE_TEMPLATE = "Templates/EcoTruekeTemplate.html";
         private const string MAIL_ECOTRUEKE_RESET_PASSWORD = "Templates/EcoTruekeResetPassword.html";
+        private const string MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_OWNER = "Templates/EcoTruekeExchangeOwnerAccepted.html";
+        private const string MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_PROPOSER = "Templates/EcoTruekeExchangeProposerAccepted.html";
 
         public MailerService(IConfiguration configuration, IHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
         {
@@ -58,6 +60,26 @@ namespace EcoTrueke.Infrastructure.Communications
                 .Replace("{Password}", newPassword);
 
             await SendSupportCallMail(user.Email, "Solicitud de contraseña", "Restablecer contraseña", $"Hola {person.Name} {person.PaternalSurname} {person.MaternalSurname}", content);
+
+            return new Result { Code = Result.OK };
+        }
+
+        public async Task<Result> SendMailExchangeAcceptedByOwner(User user, Person person)
+        {
+            var content = File.ReadAllText(Path.Combine(_environment.ContentRootPath, MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_OWNER))
+                .Replace("{telefono}", person.Phone);
+
+            await SendSupportCallMail(user.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {person.Name} {person.PaternalSurname} {person.MaternalSurname}", content);
+
+            return new Result { Code = Result.OK };
+        }
+
+        public async Task<Result> SendMailExchangeAcceptedToProposer(User user, Person person)
+        {
+            var content = File.ReadAllText(Path.Combine(_environment.ContentRootPath, MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_PROPOSER))
+                .Replace("{telefono}", person.Phone);
+
+            await SendSupportCallMail(user.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {person.Name} {person.PaternalSurname} {person.MaternalSurname}", content);
 
             return new Result { Code = Result.OK };
         }
