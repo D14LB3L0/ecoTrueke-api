@@ -73,5 +73,7 @@ namespace EcoTrueke.Domain.Entities
             ProductPicture = productPicture;
             UpdatedAt = DateTime.UtcNow;
         }
+
+       
     }
 }

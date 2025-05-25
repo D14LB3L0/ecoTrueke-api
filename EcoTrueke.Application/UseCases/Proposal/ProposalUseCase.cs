@@ -16,9 +16,10 @@ namespace EcoTrueke.Application.UseCases.Proposal
         private readonly IUserRepository _userRepository;
         private readonly IPersonRepository _personRepository;
         private readonly INotificationRepository _notificationRepository;
+        private readonly IProductRepository _productRepository;
         private readonly IMailerService _mailerService;
 
-        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository, IProposalQuery proposalQuery, IUserRepository userRepository, IPersonRepository personRepository, IMailerService mailer)
+        public ProposalUseCase(IProposalRepository proposalRepository, INotificationRepository notificationRepository, IProposalQuery proposalQuery, IUserRepository userRepository, IPersonRepository personRepository, IMailerService mailer, IProductRepository productRepository)
         {
             _proposalRepository = proposalRepository;
             _notificationRepository = notificationRepository;
@@ -26,6 +27,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
             _userRepository = userRepository;
             _personRepository = personRepository;
             _mailerService = mailer;
+            _productRepository = productRepository;
         }
 
         public Task<Result> GetProposalAcceptedExecute(string userId)
@@ -124,6 +126,38 @@ namespace EcoTrueke.Application.UseCases.Proposal
                                 var ownerPerson = await _personRepository.GetPersonById(ownerUser.PersonId);
                                 var proposerPerson = await _personRepository.GetPersonById(proposerUser.PersonId);
 
+                                try
+                                {
+                                    var ownerProduct = await _productRepository.GetProductById(proposal.RequestedProductId);
+                                    var proposerProduct = await _productRepository.GetProductById(proposal.OfferedProductId);
+
+                                    // update status
+                                    if (ownerProduct != null && proposerProduct != null)
+                                    {
+                                        // owner
+                                        ownerProduct.Status = Types.ProductStatus.Pending;
+                                        ownerProduct.UpdatedAt = DateTime.UtcNow;
+
+                                        // proposer
+                                        proposerProduct.Status = Types.ProductStatus.Pending;
+                                        proposerProduct.UpdatedAt = DateTime.UtcNow;
+                                    }
+
+                                    try
+                                    {
+                                        await _productRepository.UpdateProduct(ownerProduct);
+                                        await _productRepository.UpdateProduct(proposerProduct);
+                                    }
+                                    catch
+                                    {
+                                        return Errors.Product.FailedUpdate;
+                                    }
+                                }
+                                catch
+                                {
+                                    return Errors.Product.NotFoundProduct;
+                                }
+
                                 // create notifications
                                 var notificationOwner = Domain.Entities.Notification.ProposalAccepted(ownerUser.Id);
                                 var notificationProposer = Domain.Entities.Notification.ProposerUserRequestAccepted(proposerUser.Id);
@@ -167,7 +201,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
                 {
                     return Success.Proposal.RejectProposal;
                 }
-                    return Success.Proposal.AcceptProposal;
+                return Success.Proposal.AcceptProposal;
             }
             catch (Exception)
             {
