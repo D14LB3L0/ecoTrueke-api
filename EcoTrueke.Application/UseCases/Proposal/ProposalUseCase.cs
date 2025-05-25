@@ -141,7 +141,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
                                 {
                                     // create mails
                                     await _mailerService.SendMailExchangeAcceptedByOwner(ownerUser, ownerPerson, proposerPerson);
-                                    await _mailerService.SendMailExchangeAcceptedByOwner(proposerUser, proposerPerson, ownerPerson);
+                                    await _mailerService.SendMailExchangeAcceptedToProposer(proposerUser, proposerPerson, ownerPerson);
                                 }
                                 catch (Exception)
                                 {
