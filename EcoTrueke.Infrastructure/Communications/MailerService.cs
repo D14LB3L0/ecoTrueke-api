@@ -69,7 +69,7 @@ namespace EcoTrueke.Infrastructure.Communications
             var content = File.ReadAllText(Path.Combine(_environment.ContentRootPath, MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_OWNER))
                 .Replace("{telefono}", proposalPerson.Phone);
 
-            await SendSupportCallMail(ownerUser.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {proposalPerson.Name}   {proposalPerson.PaternalSurname} {ownerPerson.MaternalSurname}", content);
+            await SendSupportCallMail(ownerUser.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {ownerPerson.Name}   {ownerPerson.PaternalSurname} {ownerPerson.MaternalSurname}", content);
 
             return new Result { Code = Result.OK };
         }
