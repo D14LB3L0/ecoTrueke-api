@@ -176,5 +176,21 @@ namespace EcoTrueke.Domain.Constants
                 Message = "No se pudo responder la propuesta"
             };
         }
+
+        public static class UserRating
+        {
+            public static Result FailedRegisterUserRating => new()
+            {
+                Code = Result.OK,
+                Type = "failed_create_user_rating",
+                Message = "No se pudo crear la calificación correctamente"
+            };
+            public static Result FailedGetUserRating => new()
+            {
+                Code = Result.OK,
+                Type = "failed_get_user_rating",
+                Message = "No se obtener la calificación del usuario correctamente"
+            };
+        }
     }
 }

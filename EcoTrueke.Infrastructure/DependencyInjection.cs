@@ -51,6 +51,7 @@ namespace EcoTrueke.Infrastructure
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProposalRepository, ProposalRepository>();
+            services.AddScoped<IUserRatingRepository, UserRatingRepository>();
 
             return services;
         }
@@ -60,6 +61,7 @@ namespace EcoTrueke.Infrastructure
             services.AddScoped<INotificationQuery, NotificationQuery>();
             services.AddScoped<IProductQuery, ProductQuery>();
             services.AddScoped<IProposalQuery, ProposalQuery>();
+            services.AddScoped<IUserRatingQuery, UserRatingQuery>();    
 
             return services;
         }

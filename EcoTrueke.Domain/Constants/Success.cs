@@ -148,5 +148,15 @@ namespace EcoTrueke.Domain.Constants
                 Message = "La propuesta fue confirmada con éxito."
             };
         }
+
+        public static class UserRating
+        {
+            public static Result RegisterUserRating => new()
+            {
+                Code = Result.OK,
+                Type = "create_user_rating",
+                Message = "Se creó la calificación correctamente"
+            };
+        }
     }
 }
