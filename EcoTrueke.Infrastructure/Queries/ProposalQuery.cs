@@ -18,13 +18,13 @@ namespace EcoTrueke.Infrastructure.Queries
             _user = database.GetCollection<MongoModels.User>("User");
             _product = database.GetCollection<MongoModels.Product>("Product");
         }
-        public async Task<(List<GetProposalResponse> proposals, int totalPages)> GetProposals(int page, int amountPage, string loggedUserId)
+        public async Task<(List<GetProposalResponse> proposals, int totalPages)> GetProposals(int page, int amountPage,string status, string loggedUserId)
         {
             var filter = new BsonDocument("$and", new BsonArray
             {
                 new BsonDocument("isDeleted", new BsonDocument("$ne", true)),
                 new BsonDocument("ownerId", new ObjectId(loggedUserId)),
-                new BsonDocument("status", Types.ProposalStatus.Pending)
+                new BsonDocument("status", status)
             });
 
             // pipeline 

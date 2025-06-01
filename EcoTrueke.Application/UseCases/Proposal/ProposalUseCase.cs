@@ -30,14 +30,9 @@ namespace EcoTrueke.Application.UseCases.Proposal
             _productRepository = productRepository;
         }
 
-        public Task<Result> GetProposalAcceptedExecute(string userId)
+        public async Task<Result> GetProposalsExecute(int page, int amountPage, string status, string loggedUserId)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Result> GetProposalsExecute(int page, int amountPage, string loggedUserId)
-        {
-            var (proposals, totalPages) = await _proposalQuery.GetProposals(page, amountPage, loggedUserId);
+            var (proposals, totalPages) = await _proposalQuery.GetProposals(page, amountPage, status, loggedUserId);
 
             var paginationResponse = new GetPaginatedProposalResponse(proposals, totalPages);
 
@@ -102,7 +97,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
             {
                 try
                 {
-                    await _proposalRepository.RejectOrAcceptProposal(proposalId, action);
+                    await _proposalRepository.UpdateStatusProposal(proposalId, action);
 
                 }
                 catch
@@ -114,7 +109,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
                 {
                     try
                     {
-                        var proposal = await _proposalRepository.GetProposalId(proposalId);
+                        var proposal = await _proposalRepository.GetProposalById(proposalId);
 
                         try
                         {
@@ -202,6 +197,77 @@ namespace EcoTrueke.Application.UseCases.Proposal
                     return Success.Proposal.RejectProposal;
                 }
                 return Success.Proposal.AcceptProposal;
+            }
+            catch (Exception)
+            {
+                return Errors.Proposal.FailedRespondProposal;
+            }
+        }
+
+        public async Task<Result> ConfirmOrCancelProposalExecute(string proposalId, string productAction, string proposalAction)
+        {
+            try
+            {
+                try
+                {
+                    try
+                    {
+                        // get proposal
+                        var proposal = await _proposalRepository.GetProposalById(proposalId);
+
+                        // get producs
+                        var offeredProduct = await _productRepository.GetProductById(proposal.OfferedProductId);
+                        var requestedProduct = await _productRepository.GetProductById(proposal.RequestedProductId);
+
+                        try
+                        {
+                            await _proposalRepository.UpdateStatusProposal(proposalId, proposalAction);
+                        }
+                        catch (Exception)
+                        {
+                            return Errors.Proposal.FailedRespondProposal;
+                        }
+
+                        if (proposalAction == Types.ProposalStatus.Cancelled)
+                        {
+                            try
+                            {
+                                // change status active again
+                                offeredProduct.Status = Types.ProductStatus.Active;
+                                requestedProduct.Status = Types.ProductStatus.Active;
+
+                                await _productRepository.UpdateProduct(offeredProduct);
+                                await _productRepository.UpdateProduct(requestedProduct);
+
+                                return Success.Proposal.CancelProposal;
+                            }
+                            catch (Exception)
+                            {
+                                return Errors.Product.FailedUpdate;
+                            }
+
+                        }
+                        else
+                        {
+                            offeredProduct.Status = Types.ProductStatus.Traded;
+                            requestedProduct.Status = Types.ProductStatus.Traded;
+
+                            await _productRepository.UpdateProduct(offeredProduct);
+                            await _productRepository.UpdateProduct(requestedProduct);
+
+                            return Success.Proposal.ConfirmProposal;
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                        return Errors.Proposal.FailedGetProposal;
+                    }
+                }
+                catch (Exception)
+                {
+                    return Errors.Proposal.FailedRespondProposal;
+                }
             }
             catch (Exception)
             {

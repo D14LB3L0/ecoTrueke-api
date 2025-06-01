@@ -8,10 +8,10 @@ namespace EcoTrueke.Domain.Interfaces.Repositories
 
         Task<List<Proposal>> GetProposalsByUserId(string userId);
 
-        Task<Proposal> GetProposalId(string proposalId);
+        Task<Proposal> GetProposalById(string proposalId);
 
         Task<List<Proposal>> GetProposalsByOwnerId(string userId);
 
-        Task RejectOrAcceptProposal(string proposalId, string action);
+        Task UpdateStatusProposal(string proposalId, string action);
     }
 }

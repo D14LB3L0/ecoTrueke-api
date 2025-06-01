@@ -19,6 +19,8 @@
 
         public static class ProposalStatus
         {
+            public const string Completed = "completed";
+            public const string Cancelled = "cancelled";
             public const string Pending = "pending";
             public const string Rejected = "rejected";
             public const string Accepted = "accepted";

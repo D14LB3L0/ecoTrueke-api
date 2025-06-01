@@ -69,7 +69,7 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _proposalUseCase.GetProposalsExecute(request.Page, request.AmountPage,LoggedUserId);
+                var result = await _proposalUseCase.GetProposalsExecute(request.Page, request.AmountPage, request.Status, LoggedUserId);
                 if (result.Data != null)
                 {
                     var proposalResponse = JsonConvert.DeserializeObject<GetPaginatedProposalResponse>(result.Data);
@@ -97,6 +97,24 @@ namespace EcoTrueke.API.Controllers
                     return BadRequest(ModelState);
 
                 var result = await _proposalUseCase.RejectOrAcceptProposalExecute(request.ProposalId, request.Action);
+
+                return StatusCode(result.Code, new { message = result.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost("confirm-cancel")]
+        public async Task<IActionResult> ConfirmOrCancelProposal([FromBody] ConfirmOrCancelProposalRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _proposalUseCase.ConfirmOrCancelProposalExecute(request.ProposalId, request.ProductAction, request.ProposalAction);
 
                 return StatusCode(result.Code, new { message = result.Message });
             }

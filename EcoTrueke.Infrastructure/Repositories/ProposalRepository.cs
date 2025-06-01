@@ -46,22 +46,19 @@ namespace EcoTrueke.Infrastructure.Repositories
             return ProposalMapper.ToDomain(mongoProposal.ToList());
         }
 
-        public async Task RejectOrAcceptProposal(string proposalId, string action)
+        public async Task UpdateStatusProposal(string proposalId, string action)
         {
             // proposal
             await _databaseRepository.UpdateOneAsync<MongoModels.Proposal>(
             p => p.Id == proposalId && p.IsDeleted != true,
             p =>
             {
-                if (action == Types.ProposalStatus.Rejected)
-                    p.Status = action;
-                else
-                    p.Status = action;
+                p.Status = action;
                 p.UpdatedAt = DateTime.UtcNow;
             });
         }
 
-        public async Task<Proposal> GetProposalId(string proposalId)
+        public async Task<Proposal> GetProposalById(string proposalId)
         {
             // get mongo proposer
             var mongoProposer = await _databaseRepository.FindOneAsync<MongoModels.Proposal>(

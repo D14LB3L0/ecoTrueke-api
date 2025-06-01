@@ -8,10 +8,10 @@ namespace EcoTrueke.Domain.Interfaces.UseCases.Proposal
 
         Task<Result> GetProposalsRequestedExecute(string userId);
 
-        Task<Result> GetProposalAcceptedExecute(string userId);
-
-        Task<Result> GetProposalsExecute(int page, int amountPage, string loggedUserId);
+        Task<Result> GetProposalsExecute(int page, int amountPage, string status, string loggedUserId);
 
         Task<Result> RejectOrAcceptProposalExecute(string proposalId, string action);
+
+        Task<Result> ConfirmOrCancelProposalExecute(string proposalId, string actionProduct, string actionProposal);
     }
 }

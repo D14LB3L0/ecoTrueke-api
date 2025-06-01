@@ -9,5 +9,7 @@ namespace EcoTrueke.API.Requests.Proposal
 
         [Required]
         public int AmountPage { get; set; }
+
+        public string Status { get; set; }
     }
 }

@@ -135,6 +135,18 @@ namespace EcoTrueke.Domain.Constants
                 Type = "get_proposal",
                 Message = "Los datos se han obtenido correctamente."
             };
+            public static Result CancelProposal => new()
+            {
+                Code = Result.OK,
+                Type = "canceled_proposal",
+                Message = "La propuesta fue cancelada correctamente."
+            };  
+            public static Result ConfirmProposal => new()
+            {
+                Code = Result.OK,
+                Type = "confirm_proposal",
+                Message = "La propuesta fue confirmada con éxito."
+            };
         }
     }
 }
