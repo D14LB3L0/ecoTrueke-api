@@ -19,13 +19,14 @@ namespace EcoTrueke.Domain.Entities
 
         public bool IsDeleted { get; set; }
 
-        public static UserRating CreateUserRating(string ratedById, string qualifiedUserId, int stars)
+        public static UserRating CreateUserRating(string ratedUserId, string qualifiedUserId, int stars, string proposalId)
         {
             return new()
             {
-                RatedUserId = ratedById,
+                RatedUserId = ratedUserId,
                 QualifiedUserId = qualifiedUserId,
                 Stars = stars,
+                ProposalId = proposalId,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false

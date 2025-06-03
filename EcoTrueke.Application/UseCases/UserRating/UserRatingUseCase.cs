@@ -15,12 +15,12 @@ namespace EcoTrueke.Application.UseCases.UserRating
             _userRatingRepository = userRatingRepository;
         }
 
-        public async Task<Result> CreateUserRating(string ratedById, string qualifiedUserId, int stars)
+        public async Task<Result> CreateUserRating(string ratedUserId, string qualifiedUserId, int stars, string proposalId)
         {
 
             try
             {
-                var userRating = Domain.Entities.UserRating.CreateUserRating(ratedById, qualifiedUserId, stars);
+                var userRating = Domain.Entities.UserRating.CreateUserRating(ratedUserId, qualifiedUserId, stars, proposalId);
                 
                 await _userRatingRepository.CreateUserRating(userRating);
 

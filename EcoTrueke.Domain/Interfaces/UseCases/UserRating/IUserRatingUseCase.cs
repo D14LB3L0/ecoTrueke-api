@@ -5,7 +5,7 @@ namespace EcoTrueke.Domain.Interfaces.UseCases.UserRating
 {
     public interface IUserRatingUseCase
     {
-        Task<Result> CreateUserRating(string ratedById, string qualifiedUserId, int stars);
+        Task<Result> CreateUserRating(string ratedUserId, string qualifiedUserId , int stars, string proposalId);
         Task<Result> GetUserRatingExecute(string userId);
     }
 }

@@ -22,7 +22,7 @@ namespace EcoTrueke.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _userRatingUseCase.CreateUserRating(LoggedUserId, request.QualifiedUserId, request.Stars);
+                var result = await _userRatingUseCase.CreateUserRating(LoggedUserId, request.ProposerUserId, request.Stars, request.ProposalId);
 
                 return StatusCode(result.Code, new { message = result.Message });
             }
