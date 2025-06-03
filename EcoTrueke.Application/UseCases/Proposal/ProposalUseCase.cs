@@ -30,7 +30,7 @@ namespace EcoTrueke.Application.UseCases.Proposal
             _productRepository = productRepository;
         }
 
-        public async Task<Result> GetProposalsExecute(int page, int amountPage, string status, string loggedUserId)
+        public async Task<Result> GetProposalsExecute(int page, int amountPage, string? status, string loggedUserId)
         {
             var (proposals, totalPages) = await _proposalQuery.GetProposals(page, amountPage, status, loggedUserId);
 
