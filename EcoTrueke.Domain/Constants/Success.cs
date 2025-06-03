@@ -47,6 +47,12 @@ namespace EcoTrueke.Domain.Constants
                 Code = Result.OK,
                 Type = "updated",
                 Message = "Los datos se han actualizado correctamente."
+            }; 
+            public static Result GetPerson => new()
+            {
+                Code = Result.OK,
+                Type = "get_person",
+                Message = "Se encontró a la persona correctamente."
             };
         }
 

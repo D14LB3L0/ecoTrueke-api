@@ -1,5 +1,4 @@
-﻿using EcoTrueke.Domain.Constants;
-using EcoTrueke.Domain.DTOs;
+﻿using EcoTrueke.Domain.DTOs;
 using EcoTrueke.Domain.Interfaces.Queries;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -9,14 +8,9 @@ namespace EcoTrueke.Infrastructure.Queries
     public class ProposalQuery : IProposalQuery
     {
         private readonly IMongoCollection<MongoModels.Proposal> _proposal;
-        private readonly IMongoCollection<MongoModels.User> _user;
-        private readonly IMongoCollection<MongoModels.Product> _product;
-
         public ProposalQuery(IMongoDatabase database)
         {
             _proposal = database.GetCollection<MongoModels.Proposal>("Proposal");
-            _user = database.GetCollection<MongoModels.User>("User");
-            _product = database.GetCollection<MongoModels.Product>("Product");
         }
         public async Task<(List<GetProposalResponse> proposals, int totalPages)> GetProposals(int page, int amountPage, string? status, string loggedUserId)
         {

@@ -1,4 +1,8 @@
-﻿using EcoTrueke.Domain.Constants;
+﻿using System.Net;
+using System.Numerics;
+using System.Reflection;
+using System.Xml.Linq;
+using EcoTrueke.Domain.Constants;
 using EcoTrueke.Domain.Interfaces.Repositories;
 using EcoTrueke.Domain.Interfaces.Services;
 using EcoTrueke.Domain.Interfaces.UseCases.Person;
@@ -21,7 +25,7 @@ namespace EcoTrueke.Application.UseCases.Person
             _fileService = fileService;
         }
 
-        public async Task<Result> EditPerson(string userId, string firstName, string paternalSurname, string maternalSurname, string phone,
+        public async Task<Result> EditPersonExecute(string userId, string firstName, string paternalSurname, string maternalSurname, string phone,
             string documentNumber, string documentType, string? address = null, string? gender = null, IFormFile? profilePicture = null, string? profilePictureRemove = null)
         {
             // veify if user exists
@@ -80,6 +84,29 @@ namespace EcoTrueke.Application.UseCases.Person
 
             // edit person success
             return new Result { Code = Success.Person.UpdatedPerson.Code, Data = JsonConvert.SerializeObject(editPersonResponse), Message = Success.Person.UpdatedPerson.Message };
+        }
+
+        public async Task<Result> GetPersonExecute(string userId)
+        {
+            try
+            {
+                var user = await _userRepository.GetUserById(userId);
+                try
+                {
+                    var person = await _personRepository.GetPersonById(user.PersonId);
+
+                    var getPersonResponse = new GetPersonResponse(person);
+                    return new Result { Code = Success.Person.GetPerson.Code, Data = JsonConvert.SerializeObject(getPersonResponse), Message = Success.Person.GetPerson.Message };
+                }
+                catch (Exception)
+                {
+                    return Errors.Person.NotFoundPerson;
+                }
+            }
+            catch (Exception)
+            {
+                return Errors.User.NotFoundUser;
+            }
         }
     }
 }
