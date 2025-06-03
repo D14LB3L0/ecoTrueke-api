@@ -20,7 +20,10 @@ namespace EcoTrueke.Infrastructure.MongoModels
         public string QualifiedUserId { get; set; } 
 
         [BsonElement("stars")]
-        public int Stars { get; set; } 
+        public int Stars { get; set; }
+
+        [BsonElement("proposalId")]
+        public string ProposalId { get; set; }
 
         [BsonElement("createdAt")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

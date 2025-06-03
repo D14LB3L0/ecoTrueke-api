@@ -12,6 +12,7 @@ namespace EcoTrueke.Infrastructure.Mappers
                 RatedUserId = rating.RatedUserId,
                 QualifiedUserId = rating.QualifiedUserId,
                 Stars = rating.Stars,
+                ProposalId = rating.ProposalId,
                 CreatedAt = rating.CreatedAt,
                 UpdatedAt = rating.UpdatedAt,
                 IsDeleted = false
@@ -26,6 +27,7 @@ namespace EcoTrueke.Infrastructure.Mappers
                 RatedUserId = mongoRating.RatedUserId,
                 QualifiedUserId = mongoRating.QualifiedUserId,
                 Stars = mongoRating.Stars,
+                ProposalId = mongoRating.ProposalId,
                 CreatedAt = mongoRating.CreatedAt,
                 UpdatedAt = mongoRating.UpdatedAt,
                 IsDeleted = false

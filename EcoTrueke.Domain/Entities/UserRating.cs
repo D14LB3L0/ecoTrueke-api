@@ -5,6 +5,8 @@ namespace EcoTrueke.Domain.Entities
     {
         public string Id { get; set; }
 
+        public string ProposalId { get; set; }
+
         public string RatedUserId { get; set; }
 
         public string QualifiedUserId { get; set; }
