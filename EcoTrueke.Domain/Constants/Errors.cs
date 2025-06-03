@@ -181,13 +181,13 @@ namespace EcoTrueke.Domain.Constants
         {
             public static Result FailedRegisterUserRating => new()
             {
-                Code = Result.OK,
+                Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "failed_create_user_rating",
                 Message = "No se pudo crear la calificación correctamente"
             };
             public static Result FailedGetUserRating => new()
             {
-                Code = Result.OK,
+                Code = Result.UNPROCESSABLE_ENTITY,
                 Type = "failed_get_user_rating",
                 Message = "No se obtener la calificación del usuario correctamente"
             };
