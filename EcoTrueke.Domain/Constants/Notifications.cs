@@ -14,7 +14,7 @@
             public const string Title = "Solicitud de intercambio";
             public const string Message = "Haz recibido una solictud de intecambio";
             public const string Type = "info";
-            public const string Link = "/dashboard/my-products/proposal";
+            public const string Link = "/dashboard/my-products/requested";
         }
         public static class OwnerUserAcceptedProposal
         {
