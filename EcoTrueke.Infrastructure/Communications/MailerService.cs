@@ -67,9 +67,9 @@ namespace EcoTrueke.Infrastructure.Communications
         public async Task<Result> SendMailExchangeAcceptedByOwner(User ownerUser, Person ownerPerson, Person proposalPerson)
         {
             var content = File.ReadAllText(Path.Combine(_environment.ContentRootPath, MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_OWNER))
-                .Replace("{telefono}", proposalPerson.Phone);
+                .Replace("{Cellphone}", proposalPerson.Phone);
 
-            await SendSupportCallMail(ownerUser.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {ownerPerson.Name}   {ownerPerson.PaternalSurname} {ownerPerson.MaternalSurname}", content);
+            await SendSupportCallMail(ownerUser.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {ownerPerson.Name} {ownerPerson.PaternalSurname} {ownerPerson.MaternalSurname}", content);
 
             return new Result { Code = Result.OK };
         }
@@ -77,7 +77,7 @@ namespace EcoTrueke.Infrastructure.Communications
         public async Task<Result> SendMailExchangeAcceptedToProposer(User proposalUser, Person proposalPerson, Person ownerPerson)
         {
             var content = File.ReadAllText(Path.Combine(_environment.ContentRootPath, MAIL_ECOTRUEKE_EXCHANGE_ACCEPTED_PROPOSER))
-                .Replace("{telefono}", ownerPerson.Phone);
+                .Replace("{Cellphone}", ownerPerson.Phone);
 
             await SendSupportCallMail(proposalUser.Email, "Solicitud de intercambio aceptada", "solicitud de intercambio", $"Hola {proposalPerson.Name} {proposalPerson.PaternalSurname} {proposalPerson.MaternalSurname}", content);
 

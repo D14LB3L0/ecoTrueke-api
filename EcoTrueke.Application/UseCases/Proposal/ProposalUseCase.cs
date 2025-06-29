@@ -169,11 +169,12 @@ namespace EcoTrueke.Application.UseCases.Proposal
                                 try
                                 {
                                     // create mails
-                                    await _mailerService.SendMailExchangeAcceptedByOwner(ownerUser, ownerPerson, proposerPerson);
                                     await _mailerService.SendMailExchangeAcceptedToProposer(proposerUser, proposerPerson, ownerPerson);
+                                    await _mailerService.SendMailExchangeAcceptedByOwner(ownerUser, ownerPerson, proposerPerson);
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
+                                    Console.WriteLine($"Error al enviar correo: {ex.StackTrace}");
                                     return Errors.Mail.FailedToSendEmail;
                                 }
                             }

@@ -9,6 +9,8 @@ namespace Wayni.Communication.Mail
         {
             try
             {
+                ServicePointManager.ServerCertificateValidationCallback =
+                 (sender, cert, chain, sslPolicyErrors) => true;
                 var objMailMessage = new MailMessage();
                 objMailMessage.From = new MailAddress(mailSetting.Email, mailSetting.Nombre);
 
@@ -43,7 +45,7 @@ namespace Wayni.Communication.Mail
                 objMailMessage.Attachments?.Clear();
                 objMailMessage.Dispose();
             }
-            catch (System.Exception ex)
+                catch (System.Exception ex)
             {
                 throw new Exception("Error al enviar el correo.", ex);
             }
