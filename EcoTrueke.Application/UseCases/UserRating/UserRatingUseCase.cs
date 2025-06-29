@@ -38,15 +38,15 @@ namespace EcoTrueke.Application.UseCases.UserRating
             }
         }
 
-        public async Task<Result> GetUserRatingExecute(string userId)
+        public async Task<Result> GetUserRatingExecute(string? userId = null, string? token = null)
         {
             try
             {
-                var userRating = await _userRatingQuery.GetUserRatingByUserId(userId);
+                var userRating = userId == null
+                    ? await _userRatingQuery.GetUserRatingByUserId(token)
+                    : await _userRatingQuery.GetUserRatingByUserId(userId);
 
                 return new Result { Code = Success.Person.GetPerson.Code, Data = JsonConvert.SerializeObject(userRating), Message = Success.Person.GetPerson.Message };
-
-
             }
             catch (Exception ex)
             {

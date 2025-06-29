@@ -36,11 +36,12 @@ namespace EcoTrueke.API.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetUserRating(string userId)
+        public async Task<IActionResult> GetUserRating(string? userId)
         {
             try
             {
-                var result = await _userRatingUseCase.GetUserRatingExecute(userId);
+
+                var result = await _userRatingUseCase.GetUserRatingExecute(userId, LoggedUserId);
 
                 if (result.Data != null)
                 {
